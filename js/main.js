@@ -220,3 +220,19 @@ $(function() {
         }, 10);
     }
 });
+
+
+
+
+const trigger = document.getElementById('trigger');
+
+　window.addEventListener('scroll', () => {
+  const triggerRect = trigger.getBoundingClientRect();
+  const triggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
+
+  if (triggerRect.top < triggerPoint && triggerRect.bottom > triggerPoint) {
+    document.body.style.color = 'red';
+  } else {
+    document.body.style.color = 'black';
+  }
+});
