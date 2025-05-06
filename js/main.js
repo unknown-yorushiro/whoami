@@ -236,3 +236,22 @@ const trigger = document.getElementById('trigger');
     document.body.style.color = 'white';
   }
 });
+
+
+// 現在時刻を取得
+const now = new Date();
+
+// 2時間前の時刻を取得
+now.setHours(now.getHours() - 2);
+
+// 月・日・時を取得（0埋めあり）
+const month = String(now.getMonth() + 1).padStart(2, '0'); // 月は0-11なので+1
+const day = String(now.getDate()).padStart(2, '0');
+const hour = String(now.getHours()).padStart(2, '0');
+
+// 表示形式に整形
+const formatted = `${month}月${day}日${hour}時`;
+
+// HTMLに表示
+document.getElementById("output").textContent = formatted;
+
