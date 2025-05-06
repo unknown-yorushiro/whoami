@@ -93,6 +93,9 @@ section {
 	padding: var(--content-space);	/*section内の余白。冒頭のcontent-spaceを読み込みます。*/
 }
 
+#trigger {
+ background-color: #F00;
+}
 
 /*リンクテキスト全般の設定
 ---------------------------------------------------------------------------*/
