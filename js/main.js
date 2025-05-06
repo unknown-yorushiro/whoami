@@ -233,6 +233,6 @@ const trigger = document.getElementById('trigger');
   if (triggerRect.top < triggerPoint && triggerRect.bottom > triggerPoint) {
     document.body.style.color = 'red';
   } else {
-    document.body.style.color = 'black';
+    document.body.style.color = 'white';
   }
 });
