@@ -1,7 +1,7 @@
 //===============================================================
 // メニュー制御用の関数とイベント設定（※バージョン2025-1）
 //===============================================================
-$(function(){
+$(function () {
   //-------------------------------------------------
   // 変数の宣言
   //-------------------------------------------------
@@ -16,15 +16,15 @@ $(function(){
 
   // タッチデバイスかどうかの判定
   const isTouchDevice = ('ontouchstart' in window) ||
-                       (navigator.maxTouchPoints > 0) ||
-                       (navigator.msMaxTouchPoints > 0);
+    (navigator.maxTouchPoints > 0) ||
+    (navigator.msMaxTouchPoints > 0);
 
   //-------------------------------------------------
   // debounce(処理の呼び出し頻度を抑制) 関数
   //-------------------------------------------------
   function debounce(fn, wait) {
     let timerId;
-    return function(...args) {
+    return function (...args) {
       if (timerId) {
         clearTimeout(timerId);
       }
@@ -39,7 +39,7 @@ $(function(){
   //-------------------------------------------------
   function initDropdown($menu, isTouch) {
     // ドロップダウンメニューが存在するliにクラス追加
-    $menu.find('ul li').each(function() {
+    $menu.find('ul li').each(function () {
       if ($(this).find('ul').length) {
         $(this).addClass('ddmenu_parent');
         $(this).children('a').addClass('ddmenu');
@@ -49,7 +49,7 @@ $(function(){
     // ドロップダウン開閉のイベント設定
     if (isTouch) {
       // タッチデバイスの場合 → タップで開閉
-      $menu.find('.ddmenu').on('click', function(e) {
+      $menu.find('.ddmenu').on('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         const $dropdownMenu = $(this).siblings('ul');
@@ -63,10 +63,10 @@ $(function(){
     } else {
       // PCの場合 → ホバーで開閉
       $menu.find('.ddmenu_parent').hover(
-        function() {
+        function () {
           $(this).children('ul').show();
         },
-        function() {
+        function () {
           $(this).children('ul').hide();
         }
       );
@@ -77,7 +77,7 @@ $(function(){
   // ハンバーガーメニューでの開閉制御関数
   //-------------------------------------------------
   function initHamburger($hamburger, $menu) {
-    $hamburger.on('click', function() {
+    $hamburger.on('click', function () {
       $(this).toggleClass('ham');
       if ($(this).hasClass('ham')) {
         $menu.show();
@@ -101,7 +101,7 @@ $(function(){
   //-------------------------------------------------
   // レスポンシブ時の表示制御 (リサイズ時)
   //-------------------------------------------------
-  const handleResize = debounce(function() {
+  const handleResize = debounce(function () {
     const windowWidth = $(window).width();
 
     // bodyクラスの制御 (small-screen / large-screen)
@@ -153,7 +153,7 @@ $(function(){
   //-------------------------------------------------
   // アンカーリンク(#)のクリックイベント
   //-------------------------------------------------
-  $menubar.find('a[href^="#"]').on('click', function() {
+  $menubar.find('a[href^="#"]').on('click', function () {
     // ドロップダウンメニューの親(a.ddmenu)のリンクはメニューを閉じない
     if ($(this).hasClass('ddmenu')) return;
 
@@ -178,80 +178,188 @@ $(function(){
 //===============================================================
 // スムーススクロール（※バージョン2024-1）※通常タイプ
 //===============================================================
-$(function() {
-    // ページ上部へ戻るボタンのセレクター
-    var topButton = $('.pagetop');
-    // ページトップボタン表示用のクラス名
-    var scrollShow = 'pagetop-show';
+$(function () {
+  // ページ上部へ戻るボタンのセレクター
+  var topButton = $('.pagetop');
+  // ページトップボタン表示用のクラス名
+  var scrollShow = 'pagetop-show';
 
-    // スムーススクロールを実行する関数
-    // targetにはスクロール先の要素のセレクターまたは'#'（ページトップ）を指定
-    function smoothScroll(target) {
-        // スクロール先の位置を計算（ページトップの場合は0、それ以外は要素の位置）
-        var scrollTo = target === '#' ? 0 : $(target).offset().top;
-        // アニメーションでスムーススクロールを実行
-        $('html, body').animate({scrollTop: scrollTo}, 500);
+  // スムーススクロールを実行する関数
+  // targetにはスクロール先の要素のセレクターまたは'#'（ページトップ）を指定
+  function smoothScroll(target) {
+    // スクロール先の位置を計算（ページトップの場合は0、それ以外は要素の位置）
+    var scrollTo = target === '#' ? 0 : $(target).offset().top;
+    // アニメーションでスムーススクロールを実行
+    $('html, body').animate({ scrollTop: scrollTo }, 500);
+  }
+
+  // ページ内リンクとページトップへ戻るボタンにクリックイベントを設定
+  $('a[href^="#"], .pagetop').click(function (e) {
+    e.preventDefault(); // デフォルトのアンカー動作をキャンセル
+    var id = $(this).attr('href') || '#'; // クリックされた要素のhref属性を取得、なければ'#'
+    smoothScroll(id); // スムーススクロールを実行
+  });
+
+  // スクロールに応じてページトップボタンの表示/非表示を切り替え
+  $(topButton).hide(); // 初期状態ではボタンを隠す
+  $(window).scroll(function () {
+    if ($(this).scrollTop() >= 300) { // スクロール位置が300pxを超えたら
+      $(topButton).fadeIn().addClass(scrollShow); // ボタンを表示
+    } else {
+      $(topButton).fadeOut().removeClass(scrollShow); // それ以外では非表示
     }
+  });
 
-    // ページ内リンクとページトップへ戻るボタンにクリックイベントを設定
-    $('a[href^="#"], .pagetop').click(function(e) {
-        e.preventDefault(); // デフォルトのアンカー動作をキャンセル
-        var id = $(this).attr('href') || '#'; // クリックされた要素のhref属性を取得、なければ'#'
-        smoothScroll(id); // スムーススクロールを実行
-    });
-
-    // スクロールに応じてページトップボタンの表示/非表示を切り替え
-    $(topButton).hide(); // 初期状態ではボタンを隠す
-    $(window).scroll(function() {
-        if($(this).scrollTop() >= 300) { // スクロール位置が300pxを超えたら
-            $(topButton).fadeIn().addClass(scrollShow); // ボタンを表示
-        } else {
-            $(topButton).fadeOut().removeClass(scrollShow); // それ以外では非表示
-        }
-    });
-
-    // ページロード時にURLのハッシュが存在する場合の処理
-    if(window.location.hash) {
-        // ページの最上部に即時スクロールする
-        $('html, body').scrollTop(0);
-        // 少し遅延させてからスムーススクロールを実行
-        setTimeout(function() {
-            smoothScroll(window.location.hash);
-        }, 10);
-    }
+  // ページロード時にURLのハッシュが存在する場合の処理
+  if (window.location.hash) {
+    // ページの最上部に即時スクロールする
+    $('html, body').scrollTop(0);
+    // 少し遅延させてからスムーススクロールを実行
+    setTimeout(function () {
+      smoothScroll(window.location.hash);
+    }, 10);
+  }
 });
 
 
+const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
+//timeはミリ秒
 
 
-const trigger = document.getElementById('trigger');
+//===============================================================
+// 文字色変更演出
+//===============================================================
+const horror_trigger = document.getElementById('horror-trigger');
 
-　window.addEventListener('scroll', () => {
-  const triggerRect = trigger.getBoundingClientRect();
-  const triggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
-
-  if (triggerRect.top < triggerPoint && triggerRect.bottom > triggerPoint) {
-    document.body.style.color = 'red';
+var isHorrorExe = false;
+window.addEventListener('scroll', () => {
+  const horror_triggerRect = horror_trigger.getBoundingClientRect();
+  const horror_triggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
+  if (horror_triggerRect.top < horror_triggerPoint && horror_triggerRect.bottom > horror_triggerPoint) {
+    if (!isHorrorExe) {
+      isHorrorExe = true;
+      start_horror();
+    }
   } else {
     document.body.style.color = 'white';
   }
 });
 
 
-// 現在時刻を取得
+let first_flag = true;
+/*
+ * 0: id名
+ * 1: top
+ * 2: left (要素10以降はright)
+ * 3: フォントサイズ
+ * 4: 角度
+ */
+let horrorWindowList = [
+  ['horrorPopup1', "0px", "0px", "6rem", "0deg"],
+  ['horrorPopup2', "50px", "50px", "6rem", "-30deg"],
+  ['horrorPopup3', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup4', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup5', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup6', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup7', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup8', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup9', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup10', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup11', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup12', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup13', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup14', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup15', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup16', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup17', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup18', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup19', "50px", "50px", "6rem", "-40deg"],
+  ['horrorPopup20', "50px", "50px", "6rem", "-40deg"]
+];
+async function start_horror() {
+  let i = 0;
+  let sleep_time = 1500;
+  let len = horrorWindowList.length;
+  let rand = Math.floor(Math.random() * len);
+
+  if(first_flag){
+    rand = 0;
+    first_flag = false;
+    document.getElementById(horrorWindowList[rand][0]).classList.add('align-items');
+    document.getElementById(horrorWindowList[rand][0]).style.alignItems = "center";
+  }
+
+  horror = document.getElementById(horrorWindowList[rand][0]);
+  horror.style.zIndex = i + 1000;
+  horror.style.top = horrorWindowList[rand][1];
+  if (rand < 10) {
+    horror.style.left = horrorWindowList[rand][2];
+  }else{
+    horror.classList.remove('left');
+    horror.classList.add('right');
+    horror.style.right = horrorWindowList[rand][2];
+  }
+  horror.style.fontSize = horrorWindowList[rand][3];
+  horror.style.transform = "rotate(" + horrorWindowList[rand][4] + ")";
+  horror.style.display = "block";
+  await sleep(2000);
+  horror.style.display = "none";
+  await sleep(5000);
+  isHorrorExe = false;
+}
+
+
+//===============================================================
+// 文字色変更演出
+//===============================================================
+const trigger = document.getElementById('trigger');
+
+var isExe = false;
+window.addEventListener('scroll', () => {
+  const triggerRect = trigger.getBoundingClientRect();
+  const triggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
+  if (triggerRect.top < triggerPoint && triggerRect.bottom > triggerPoint) {
+    if(!isExe){
+      isExe = true;
+      start_red();
+    }else{
+      document.body.style.color = 'red';
+    }
+  } else {
+    document.body.style.color = 'white';
+  }
+});
+
+async function start_red() {
+    document.getElementById('overlay').classList.add('visible');
+    await sleep(500);
+    $('html, body').css('overflow', 'hidden');
+    document.body.style.color = 'red';
+    await sleep(500);
+    document.getElementById('overlay').classList.remove('visible');
+    $('html, body').css('overflow', '');
+}
+
+//===============================================================
+// 現在時刻取得処理
+//===============================================================
 const now = new Date();
-
+const utc = now.toUTCString();
+// 取得された文字列の「GMT」を除去する
+const g = utc.replace('GMT', '');
+// 除去された文字列を使用し、インスタンスする
+const gDate = new Date(g);
+const hours = gDate.getHours();
+gDate.setHours(hours + 9);
 // 2時間前の時刻を取得
-now.setHours(now.getHours() - 2);
-
+gDate.setHours(gDate.getHours() - 2);
 // 月・日・時を取得（0埋めあり）
-const month = String(now.getMonth() + 1).padStart(2, '0'); // 月は0-11なので+1
-const day = String(now.getDate()).padStart(2, '0');
-const hour = String(now.getHours()).padStart(2, '0');
-
+const month = String(gDate.getMonth() + 1).padStart(2, '0'); // 月は0-11なので+1
+const day = String(gDate.getDate()).padStart(2, '0');
+const hour = String(gDate.getHours()).padStart(2, '0');
 // 表示形式に整形
 const formatted = `${month}月${day}日${hour}時`;
-
 // HTMLに表示
 document.getElementById("output").textContent = formatted;
 
+s
