@@ -341,7 +341,7 @@ async function start_red() {
 }
 
 //===============================================================
-// 現在時刻取得処理
+// 現在時刻取得処理→2時間前時間に変更処理
 //===============================================================
 const now = new Date();
 const utc = now.toUTCString();
@@ -352,7 +352,11 @@ const gDate = new Date(g);
 const hours = gDate.getHours();
 gDate.setHours(hours + 9);
 // 2時間前の時刻を取得
-gDate.setHours(gDate.getHours() - 2);
+if(gDate.getMinutes() > 30){
+  gDate.setHours(gDate.getHours() - 1);
+}else{
+  gDate.setHours(gDate.getHours() - 2);
+}
 // 月・日・時を取得（0埋めあり）
 const month = String(gDate.getMonth() + 1).padStart(2, '0'); // 月は0-11なので+1
 const day = String(gDate.getDate()).padStart(2, '0');
@@ -361,5 +365,3 @@ const hour = String(gDate.getHours()).padStart(2, '0');
 const formatted = `${month}月${day}日${hour}時`;
 // HTMLに表示
 document.getElementById("output").textContent = formatted;
-
-s
