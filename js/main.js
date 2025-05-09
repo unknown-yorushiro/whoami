@@ -439,7 +439,7 @@ const phrases = [
   'and walking the path'
 ];
 
-const el = document.querySelector('.text');
+const el = document.querySelector('.effect-text');
 const fx = new TextScramble(el);
 
 let counter = 0;
