@@ -510,3 +510,16 @@ div.padding0 {
   .blink-fast {
 	animation: blink-fast 0.75s linear infinite;
   }
+
+
+/*追記表示用*/
+.ps-text:hover {
+	color: red;
+}
+
+.effect-text{
+  font-weight 100
+  font-size 28px
+  color #FAFAFA
+}
+
