@@ -446,17 +446,13 @@ async function psDisplay(){
     const fx = new TextScramble(el);
     
     let counter = 0;
-    /*const next = () => {
-      fx.setText(phrases[counter]).then(() => {
-        setTimeout(next, 4000);
-      });
-      counter = (counter + 1) % phrases.length;
-    }*/
-    for(counter=0; counter<phrases.length; counter++){
-      setText(phrases[counter]);
-      next();
-      await sleep(4000);
+    const next = () => {
+      if(phrases.length == counter) return;
+        fx.setText(phrases[counter]).then(() => {
+          setTimeout(next, 4000);
+        });
+      counter++;
     }
-    //next();
+    next();
   }
 }
