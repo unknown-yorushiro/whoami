@@ -230,18 +230,28 @@ const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 // 文字色変更演出
 //===============================================================
 const horror_trigger = document.getElementById('horror-trigger');
-
+const horror_trigger2 = document.getElementById('horror-trigger2');
 var isHorrorExe = false;
+var isHorrorExe2 = false;
 window.addEventListener('scroll', () => {
   const horror_triggerRect = horror_trigger.getBoundingClientRect();
   const horror_triggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
   if (horror_triggerRect.top < horror_triggerPoint && horror_triggerRect.bottom > horror_triggerPoint) {
     if (!isHorrorExe) {
       isHorrorExe = true;
-      start_horror();
+      start_horror(0);
     }
   } else {
-    document.body.style.color = 'white';
+    const horror_triggerRect2 = horror_trigger2.getBoundingClientRect();
+    const horror_triggerPoint2 = window.innerHeight / 2 + 100; // 中心より100px下
+    if (horror_triggerRect2.top < horror_triggerPoint2 && horror_triggerRect2.bottom > horror_triggerPoint2) {
+      if (!isHorrorExe2){
+        isHorrorExe2 = true;
+        start_horror(1);
+      }
+    }else{
+      document.body.style.color = 'white'
+    }
   }
 });
 
@@ -282,8 +292,9 @@ noiseKimoi.pause();
 noiseKimoi.currentTime = 0;
 reivoice.pause();
 reivoice.currentTime = 0;
-async function start_horror() {
-  let i = 0;
+let i_horror = 0;
+let variables = [];
+async function start_horror(effect_pattern) {
   let sleep_time = 1500;
   let len = horrorWindowList.length;
   let rand = Math.floor(Math.random() * len);
@@ -308,21 +319,29 @@ async function start_horror() {
   }else if(voice_rand == 1){
     reivoice.play();
   }
-  
-  horror.style.display = "block";
-  await sleep(2000);
-  horror.style.display = "none";
 
-  if(voice_rand == 0){
-    noiseKimoi.pause();
-    noiseKimoi.currentTime = 0;
-  }else if(voice_rand == 1){
-    reivoice.pause();
-    reivoice.currentTime = 0;
+  if(effect_pattern == 0){
+    horror.style.display = "block";
+    await sleep(2000);
+    horror.style.display = "none";
+
+    if(voice_rand == 0){
+      noiseKimoi.pause();
+      noiseKimoi.currentTime = 0;
+    }else if(voice_rand == 1){
+      reivoice.pause();
+      reivoice.currentTime = 0;
+    }
+    await sleep(5000);
+    isHorrorExe = false;
+  }else if (effect_pattern == 1){
+    variables[i_horror] = horror;
+    horrorWindowList.push(horrorWindowList.splice(rand, 1)); // 配列のランダム値に対応するインデックスを得たうえで元々の配列から取り除く
+    variables[i_horror].style.display= "block";
+    await sleep(2500);
+    i_horror++;
+    isHorrorExe2 = false;
   }
-  
-  await sleep(5000);
-  isHorrorExe = false;
 }
 
 
@@ -353,6 +372,11 @@ async function start_red() {
     $('html, body').css('overflow', 'hidden');
     document.body.style.color = 'red';
     await sleep(500);
+    for(i=0; i<=i_horror; i++){
+      variables[i].style.display = "none";
+    }
+    noiseKimoi.pause();
+    reivoice.pause();
     document.getElementById('overlay').classList.remove('visible');
     $('html, body').css('overflow', '');
 }
