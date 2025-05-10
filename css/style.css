@@ -489,20 +489,6 @@ div.padding0 {
 	overflow: hidden;
 }
 
-  @keyframes blink-fast {
-	0%, 25%, 50%, 75%, 100% {
-	  opacity: 1;
-	}
-	12.5%, 37.5%, 62.5%, 87.5% {
-	  opacity: 0;
-	}
-  }
-
-  .blink-fast {
-	animation: blink-fast 0.75s linear infinite;
-  }
-
-
 /*追記表示用*/
 .ps-text:hover {
 	color: red;
@@ -514,3 +500,23 @@ div.padding0 {
   color: #FFF;
 }
 
+.p-style{
+  display: inline-block;
+}
+
+@keyframes blink {
+  0%, 25%, 50%, 75%, 100% {
+    opacity: 1;
+  }
+  12.5%, 37.5%, 62.5%, 87.5% {
+    opacity: 0;
+  }
+}
+
+.blink-fast {
+  animation: blink 0.75s linear infinite;
+}
+
+.blink-slow{
+  animation: blink 12.0s linear infinite;
+}
