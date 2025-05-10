@@ -509,8 +509,8 @@ div.padding0 {
 }
 
 .effect-text{
-  font-weight 10;
-  font-size 10px;
-  color #FAFAFA;
+  font-weight: normal;
+  font-size: 15px;
+  color: #FFF;
 }
 
