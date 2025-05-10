@@ -429,20 +429,19 @@ class TextScramble {
 // Example
 // ——————————————————————————————————————————————————
 isPsExe = false;
-const phrases = [
-  '見えているだろうか？',
-  '現在、この場所が安定していないことを確認している。',
-  'きっとあの団体が原因だ。',
-  'とにもかくにも、何が起こるか分からない'。,
-  '確認してもらいたいのはやまやまだが、状況が状況…',
-  '確認するのは任意、引き返しても問題はない。',
-  '上からになり申し訳ない。だが、十分に注意してほしい。',
-  'よろしく頼んだ。'
-];
-
 async function psDisplay(){
   if(!isPsExe){
-    isPeExe = true;
+    const phrases = [
+      '見えているだろうか？',
+      '現在、この場所が安定していないことを確認している。',
+      'きっとあの団体が原因だ。',
+      'とにもかくにも、何が起こるか分からない'。,
+      '確認してもらいたいのはやまやまだが、状況が状況…',
+      '確認するのは任意、引き返しても問題はない。',
+      '上からになり申し訳ない。だが、十分に注意してほしい。',
+      'よろしく頼んだ。'
+    ];
+    isPsExe = true;
     const el = document.querySelector('.effect-text');
     const fx = new TextScramble(el);
     
@@ -455,6 +454,7 @@ async function psDisplay(){
     }*/
     for(counter=0; counter<phrases.length; counter++){
       setText(phrases[counter]);
+      next();
       await sleep(4000);
     }
     //next();
