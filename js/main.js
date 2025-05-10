@@ -430,13 +430,13 @@ class TextScramble {
 // ——————————————————————————————————————————————————
 function psDisplay(){
 const phrases = [
-  'Neo,',
-  'sooner or later',
-  'you\'re going to realize',
-  'just as I did',
-  'that there\'s a difference',
-  'between knowing the path',
-  'and walking the path'
+  '見えているだろうか？',
+  '現在、この場所が安定していないことを確認している',
+  'きっとあの団体が原因だ',
+  'とにもかくにも何が起こるか分からない',
+  '本当は確認してもらいたいが、状況が状況…',
+  '確認するのは任意、引き返しても問題はない',
+  '上からになり申し訳ない。だが、十分に注意してほしい'
 ];
 
 const el = document.querySelector('.effect-text');
@@ -445,7 +445,7 @@ const fx = new TextScramble(el);
 let counter = 0;
 const next = () => {
   fx.setText(phrases[counter]).then(() => {
-    setTimeout(next, 800)
+    setTimeout(next, 5000);
   });
   counter = (counter + 1) % phrases.length;
 }
