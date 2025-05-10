@@ -343,6 +343,7 @@ async function start_red() {
 //===============================================================
 // 現在時刻取得処理→2時間前時間に変更処理
 //===============================================================
+alert("tttt747");
 const now = new Date();
 const utc = now.toUTCString();
 // 取得された文字列の「GMT」を除去する
@@ -365,7 +366,7 @@ const hour = String(gDate.getHours()).padStart(2, '0');
 const formatted = `${month}月${day}日${hour}時`;
 // HTMLに表示
 document.getElementById("output").textContent = formatted;
-
+  alert("ttttw");
 
 // ——————————————————————————————————————————————————
 // TextScramble
@@ -431,6 +432,7 @@ class TextScramble {
 isPsExe = false;
 async function psDisplay(){
   if(!isPsExe){
+    alert("tttt");
     const phrases = [
       '見えているだろうか？',
       '現在、この場所が安定していないことを確認している。',
