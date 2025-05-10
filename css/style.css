@@ -496,6 +496,21 @@ div.padding0 {
 	overflow: hidden;
 }
 
+.first-popup {
+	position: fixed;
+
+   top: 50%;
+   left: 50%;
+   
+   transform: translate(-50%,-50%); /* コ
+   color: #ff0000; /*文字色*/
+
+   font-size: 7rem;
+   z-index: 2000;
+   text-align: center;
+}
+
+
 /*追記表示用*/
 .ps-text:hover {
 	color: red;
