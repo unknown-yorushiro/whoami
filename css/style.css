@@ -474,41 +474,34 @@ div.padding0 {
 	padding: 0;
 }
 
-  /*ポップアップウィンドウ*/
+  /*ホラー演出用ポップアップウィンドウ*/
 .horror-popup {
 	display: none;
-	font-size: 10rem;
-	/*文字サイズ90%*/
 	position: fixed;
 	/*position: relative;*/
 	z-index: 2000;
-	top: 0;
-	left: 0;
-	transform: rotate(-45deg);
+	top: 0%;
+        left: 0%;
+	transform: translate(-50%,-50%) rotate(-45deg);
 	/*right: 30px;
 	bottom: 100px;*/
-	width: 1000px;
-	padding: 1rem 2rem;
-	/*上下、左右の余白*/
 
 	/* 装飾 */
 	color: #ff0000; /*文字色*/
 	overflow: hidden;
+        text-align: center;
 }
 
 .first-popup {
-	display: none;
-	position: fixed;
-	z-index: 2000;
-	top: 0%;
-        left: 0%;
-	transform: translate(-50%,-50%) rotate(0deg);
-
-	/* 装飾 */
-	color: #ff0000; /*文字色*/
-	overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color: #ff0000; /*文字色*/
+  font-size: 6rem;
+  z-index: 2000;
+  text-align: center;
 }
-
 
 /*追記表示用*/
 .ps-text:hover {
