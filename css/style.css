@@ -9,9 +9,9 @@
 /*font 読み込み*/
 @font-face { 
   /* ① ここにfont-familyで指定したい名前を書く*/
-  font-family: "obake"; 
+  font-family: "onryou"; 
   /* フォントが置かれているパスを書く */ 
-  src: url("/assets/font/obake.ttf") format("truetype") }
+  src: url("/assets/font/onryou.ttf") format("truetype") }
 }
 
 /*CSSカスタムプロパティ（サイト全体を一括管理する為の設定）
