@@ -497,14 +497,16 @@ div.padding0 {
 }
 
 .first-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;   
-  transform: translate(-50%,-50%);
-  color: #ff0000; /*文字色*/
-  font-size: 7rem;
-  z-index: 2000;
-  text-align: center;
+	display: none;
+	position: fixed;
+	z-index: 2000;
+	top: 0%;
+        left: 0%;
+	transform: translate(-50%,-50%) rotate(0deg);
+
+	/* 装飾 */
+	color: #ff0000; /*文字色*/
+	overflow: hidden;
 }
 
 
