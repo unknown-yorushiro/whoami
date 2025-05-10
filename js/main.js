@@ -343,7 +343,6 @@ async function start_red() {
 //===============================================================
 // 現在時刻取得処理→2時間前時間に変更処理
 //===============================================================
-alert("tttt747");
 const now = new Date();
 const utc = now.toUTCString();
 // 取得された文字列の「GMT」を除去する
@@ -366,12 +365,10 @@ const hour = String(gDate.getHours()).padStart(2, '0');
 const formatted = `${month}月${day}日${hour}時`;
 // HTMLに表示
 document.getElementById("output").textContent = formatted;
-  alert("ttttw");
 
-// ——————————————————————————————————————————————————
-// TextScramble
-// ——————————————————————————————————————————————————
-
+//===============================================================
+// 追記事項表示時の動的演出
+//===============================================================
 class TextScramble {
   constructor(el) {
     this.el = el;
@@ -426,35 +423,38 @@ class TextScramble {
   }
 }
 
-// ——————————————————————————————————————————————————
-// Example
-// ——————————————————————————————————————————————————
+const phrases = [
+   '見えているだろうか？',
+   '現在、この場所が安定していないことを確認している。',
+   'きっとあの団体が原因だ。',
+   'とにもかくにも、何が起こるか分からない。',
+   '記録を確認してもらいたいのはやまやまだが、状況が状況…',
+   '確認するのは任意、引き返しても問題はない。',
+   '上からになり申し訳ない。だが、確認する場合は十分に注意してほしい。',
+   'では、また何処かで。',
+   ''
+];
 isPsExe = false;
 async function psDisplay(){
-  if(!isPsExe){
-    alert("tttt");
-    const phrases = [
-      '見えているだろうか？',
-      '現在、この場所が安定していないことを確認している。',
-      'きっとあの団体が原因だ。',
-      'とにもかくにも、何が起こるか分からない'。,
-      '確認してもらいたいのはやまやまだが、状況が状況…',
-      '確認するのは任意、引き返しても問題はない。',
-      '上からになり申し訳ない。だが、十分に注意してほしい。',
-      'よろしく頼んだ。'
-    ];
-    isPsExe = true;
-    const el = document.querySelector('.effect-text');
-    const fx = new TextScramble(el);
-    
-    let counter = 0;
-    const next = () => {
-      if(phrases.length == counter) return;
+    if(!isPsExe){
+      isPsExe = true;
+      document.getElementById("ps-click").innerHTML = "";
+      await sleep(5000);
+      const el = document.querySelector('.effect-text');
+      const fx = new TextScramble(el);
+      
+      let counter = 0;
+      const next = () => {
+        if(phrases.length == counter){
+          isPsExe = false;
+          return;
+        }
         fx.setText(phrases[counter]).then(() => {
-          setTimeout(next, 4000);
+          setTimeout(next, 4500);
         });
-      counter++;
+        counter++;
+      }
+      
+      next();
     }
-    next();
-  }
 }
