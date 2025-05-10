@@ -522,7 +522,8 @@ div.padding0 {
 }
 
 .p-style{
-  display: inline-block;
+  margin: 0;
+  padding: 0;
 }
 
 @keyframes blink {
