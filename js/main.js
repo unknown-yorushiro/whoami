@@ -276,15 +276,23 @@ let horrorWindowList = [
   ['horrorPopup19', "74%", "20%", "6rem", "50deg"],
   ['horrorPopup20', "65%", "90%", "3rem", "10deg"]
 ];
+const noiseKimoi = document.getElementById('noise_kimoi');
+const reivoice = document.getElementById('reivoice');
+noiseKimoi.pause();
+noiseKimoi.currentTime = 0;
+reivoice.pause();
+reivoice.currentTime = 0;
 async function start_horror() {
   let i = 0;
   let sleep_time = 1500;
   let len = horrorWindowList.length;
   let rand = Math.floor(Math.random() * len);
   let horror;
+  let voice_rand = Math.floor(Math.random() * 2);
 
   if(first_flag){
     rand = 0;
+    voice_rand = 1;
     first_flag = false;
     horror = document.getElementById("firstPopup");
   }else{
@@ -293,12 +301,26 @@ async function start_horror() {
     horror.style.top = horrorWindowList[rand][1];
     horror.style.left = horrorWindowList[rand][2];
     horror.style.fontSize = horrorWindowList[rand][3];
-  horror.style.transform = "translate(-50%,-50%) rotate(" + horrorWindowList[rand][4] + ")";
+    horror.style.transform = "translate(-50%,-50%) rotate(" + horrorWindowList[rand][4] + ")";
 }
+  if(voice_rand == 0){
+    noiseKimoi.play();
+  }else if(voice_rand == 1){
+    reivoice.play();
+  }
   
   horror.style.display = "block";
   await sleep(2000);
   horror.style.display = "none";
+
+  if(voice_rand == 0){
+    noiseKimoi.pause();
+    noiseKimoi.currentTime = 0;
+  }else if(voice_rand == 1){
+    reivoice.pause();
+    reivoice.currentTime = 0;
+  }
+  
   await sleep(5000);
   isHorrorExe = false;
 }
