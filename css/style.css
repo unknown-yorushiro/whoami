@@ -11,7 +11,7 @@
   /* ① ここにfont-familyで指定したい名前を書く*/
   font-family: "onryou"; 
   /* フォントが置かれているパスを書く */ 
-  src: url("/assets/fonts/onryou.TTF") format("truetype");
+  src: url("../assets/fonts/onryou.TTF") format("truetype");
 }
 
 /*CSSカスタムプロパティ（サイト全体を一括管理する為の設定）
