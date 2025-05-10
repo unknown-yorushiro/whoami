@@ -281,26 +281,27 @@ async function start_horror() {
   let sleep_time = 1500;
   let len = horrorWindowList.length;
   let rand = Math.floor(Math.random() * len);
+  let horror;
 
   if(first_flag){
     rand = 0;
     first_flag = false;
-    document.getElementById(horrorWindowList[rand][0]).classList.add('align-items');
-    document.getElementById(horrorWindowList[rand][0]).style.alignItems = "center";
+         horror = document.getElementById("firstPopup");
+  }else{
+    horror = document.getElementById(horrorWindowList[rand][0]);
+    horror.style.zIndex = i + 1000;
+    horror.style.top = horrorWindowList[rand][1];
+    if (rand < 10) {
+      horror.style.left = horrorWindowList[rand][2];
+    }else{
+      horror.classList.remove('left');
+      horror.classList.add('right');
+      horror.style.right = horrorWindowList[rand][2];
+    }
+    horror.style.fontSize = horrorWindowList[rand][3];
+    horror.style.transform = "rotate(" + horrorWindowList[rand][4] + ")";
   }
 
-  horror = document.getElementById(horrorWindowList[rand][0]);
-  horror.style.zIndex = i + 1000;
-  horror.style.top = horrorWindowList[rand][1];
-  if (rand < 10) {
-    horror.style.left = horrorWindowList[rand][2];
-  }else{
-    horror.classList.remove('left');
-    horror.classList.add('right');
-    horror.style.right = horrorWindowList[rand][2];
-  }
-  horror.style.fontSize = horrorWindowList[rand][3];
-  horror.style.transform = "rotate(" + horrorWindowList[rand][4] + ")";
   horror.style.display = "block";
   await sleep(2000);
   horror.style.display = "none";
