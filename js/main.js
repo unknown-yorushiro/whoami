@@ -255,26 +255,26 @@ let first_flag = true;
  * 4: 角度
  */
 let horrorWindowList = [
-  ['horrorPopup1', "0px", "0px", "6rem", "0deg"],
-  ['horrorPopup2', "50px", "50px", "6rem", "-30deg"],
-  ['horrorPopup3', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup4', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup5', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup6', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup7', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup8', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup9', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup10', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup11', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup12', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup13', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup14', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup15', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup16', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup17', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup18', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup19', "50px", "50px", "6rem", "-40deg"],
-  ['horrorPopup20', "50px", "50px", "6rem", "-40deg"]
+  ['horrorPopup1', "10%", "15%", "6rem", "10deg"],
+  ['horrorPopup2', "40%", "40%", "5rem", "-30deg"],
+  ['horrorPopup3', "15%", "60%", "6rem", "-15deg"],
+  ['horrorPopup4', "70%", "30%", "5rem", "-25deg"],
+  ['horrorPopup5', "60%", "75%", "4rem", "-40deg"],
+  ['horrorPopup6', "80%", "45%", "5rem", "-20deg"],
+  ['horrorPopup7', "50%", "30%", "5rem", "-35deg"],
+  ['horrorPopup8', "35%", "50%", "3rem", "-30deg"],
+  ['horrorPopup9', "20%", "80%", "6rem", "-50deg"],
+  ['horrorPopup10', "85%", "30%", "3rem", "-10deg"],
+  ['horrorPopup11', "65%", "45%", "6rem", "10deg"],
+  ['horrorPopup12', "80%", "60%", "5rem", "30deg"],
+  ['horrorPopup13', "45%", "55%", "6rem", "15deg"],
+  ['horrorPopup14', "30%", "80%", "5rem", "25deg"],
+  ['horrorPopup15', "20%", "40%", "4rem", "40deg"],
+  ['horrorPopup16', "40%", "40%", "3rem", "15deg"],
+  ['horrorPopup17', "80%", "20%", "5rem", "35deg"],
+  ['horrorPopup18', "70%", "80%", "5rem", "30deg"],
+  ['horrorPopup19', "74%", "20%", "6rem", "50deg"],
+  ['horrorPopup20', "65%", "90%", "3rem", "10deg"]
 ];
 async function start_horror() {
   let i = 0;
@@ -286,22 +286,16 @@ async function start_horror() {
   if(first_flag){
     rand = 0;
     first_flag = false;
-         horror = document.getElementById("firstPopup");
+    horror = document.getElementById("firstPopup");
   }else{
     horror = document.getElementById(horrorWindowList[rand][0]);
-    horror.style.zIndex = i + 1000;
+    horror.style.zIndex = rand + 1000;
     horror.style.top = horrorWindowList[rand][1];
-    if (rand < 10) {
-      horror.style.left = horrorWindowList[rand][2];
-    }else{
-      horror.classList.remove('left');
-      horror.classList.add('right');
-      horror.style.right = horrorWindowList[rand][2];
-    }
+    horror.style.left = horrorWindowList[rand][2];
     horror.style.fontSize = horrorWindowList[rand][3];
-    horror.style.transform = "rotate(" + horrorWindowList[rand][4] + ")";
-  }
-
+  horror.style.transform = "translate(-50%,-50%) rotate(" + horrorWindowList[rand][4] + ")";
+}
+  
   horror.style.display = "block";
   await sleep(2000);
   horror.style.display = "none";
