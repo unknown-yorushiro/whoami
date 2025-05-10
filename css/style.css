@@ -497,17 +497,14 @@ div.padding0 {
 }
 
 .first-popup {
-	position: fixed;
-
-   top: 50%;
-   left: 50%;
-   
-   transform: translate(-50%,-50%); /* コ
-   color: #ff0000; /*文字色*/
-
-   font-size: 7rem;
-   z-index: 2000;
-   text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;   
+  transform: translate(-50%,-50%);
+  color: #ff0000; /*文字色*/
+  font-size: 7rem;
+  z-index: 2000;
+  text-align: center;
 }
 
 
