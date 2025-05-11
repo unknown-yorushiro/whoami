@@ -416,6 +416,7 @@ window.addEventListener('scroll', () => {
       isFinalEffect = true;
       startFinalEffect();
     }
+  }
 });
 
 async function startFinalEffect(){
