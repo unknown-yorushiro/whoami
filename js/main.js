@@ -273,7 +273,7 @@ window.addEventListener('scroll', () => {
       if (!isHorrorExe2){
         /* 1回目の演出が再度行われないようにする*/
         isHorrorExe = true;
-        horror.style.display = "none";
+        //horror.style.display = "none";
         
         isHorrorExe2 = true;
         start_horror(1);
@@ -349,12 +349,14 @@ async function start_horror(effect_pattern) {
     await sleep(5000);
     isHorrorExe = false;
   }else if (effect_pattern == 1){
-    variables[i_horror] = horror;
-    horrorWindowList.push(horrorWindowList.splice(rand, 1)); // 配列のランダム値に対応するインデックスを得たうえで元々の配列から取り除く
-    variables[i_horror].style.display= "block";
-    await sleep(2000);
-    i_horror++;
-    isHorrorExe2 = false;
+    if(len != 0){
+      variables[i_horror] = horror;
+      horrorWindowList.splice(rand, 1);
+      variables[i_horror].style.display= "block";
+      await sleep(2000);
+      i_horror++;
+      isHorrorExe2 = false;
+    }   
   }
 
   if(voice_rand == 0){
@@ -396,7 +398,7 @@ async function start_red() {
 
     /* ホラー演出表示したポップアップメニューを非表示にする*/
     horror.style.display = "none";
-    for(i=0; i<variables.length; i++){
+    for(let i=0; i<variables.length; i++){
       variables[i].style.display = "none";
     }
   
