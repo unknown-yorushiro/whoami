@@ -229,6 +229,7 @@ $(function () {
 const horror_trigger = document.getElementById('horror-trigger');
 const horror_trigger2 = document.getElementById('horror-trigger2');
 const trigger = document.getElementById('trigger');
+const final_trigger = document.getElementById('final-trigger');
 /*ホラー演出初回時フラグ*/
 let first_flag = true;
 /*ホラーポップアップ用*/
@@ -236,11 +237,14 @@ let horror;
 /*各種音声の定義*/
 const noiseKimoi = document.getElementById('noise_kimoi');
 const reivoice = document.getElementById('reivoice');
+const whitenoise = document.getElementById('whitenoise');
 /*音声の初期化*/
 noiseKimoi.pause();
 noiseKimoi.currentTime = 0;
 reivoice.pause();
 reivoice.currentTime = 0;
+whitenoise.pause();
+whitenoise.currentTime = 0;
 
 
 /*sleep処理用定義*/
@@ -398,6 +402,23 @@ async function start_red() {
     $('html, body').css('overflow', '');
 }
 
+//===============================================================
+// 最終演出
+//===============================================================
+var isFinalEffectExe = false;
+window.addEventListener('scroll', () => {
+  const ftriggerRect = final_trigger.getBoundingClientRect();
+  const ftriggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
+  if (ftriggerRect.top < ftriggerPoint && ftriggerRect.bottom > ftriggerPoint) {
+    if(!isFinalEffectExe){
+      isFinalEffect = true;
+      startFinalEffect();
+    }
+});
+
+async function startFinalEffect(){
+  
+}
 //===============================================================
 // 現在時刻取得処理→2時間前時間に変更処理
 //===============================================================
