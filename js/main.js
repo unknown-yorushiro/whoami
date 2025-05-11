@@ -222,15 +222,34 @@ $(function () {
 });
 
 
+//===============================================================
+// 自作関数用グローバス変数定義
+//===============================================================
+/*各種id取得*/
+const horror_trigger = document.getElementById('horror-trigger');
+const horror_trigger2 = document.getElementById('horror-trigger2');
+const trigger = document.getElementById('trigger');
+/*ホラー演出初回時フラグ*/
+let first_flag = true;
+/*ホラーポップアップ用*/
+let horror;
+/*各種音声の定義*/
+const noiseKimoi = document.getElementById('noise_kimoi');
+const reivoice = document.getElementById('reivoice');
+/*音声の初期化*/
+noiseKimoi.pause();
+noiseKimoi.currentTime = 0;
+reivoice.pause();
+reivoice.currentTime = 0;
+
+
+/*sleep処理用定義*/
 const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 //timeはミリ秒
-
 
 //===============================================================
 // 文字色変更演出
 //===============================================================
-const horror_trigger = document.getElementById('horror-trigger');
-const horror_trigger2 = document.getElementById('horror-trigger2');
 var isHorrorExe = false;
 var isHorrorExe2 = false;
 window.addEventListener('scroll', () => {
@@ -246,7 +265,10 @@ window.addEventListener('scroll', () => {
     const horror_triggerPoint2 = window.innerHeight / 2 + 100; // 中心より100px下
     if (horror_triggerRect2.top < horror_triggerPoint2 && horror_triggerRect2.bottom > horror_triggerPoint2) {
       if (!isHorrorExe2){
+        /* 1回目の演出が再度行われないようにする*/
         isHorrorExe = true;
+        horror.style.display = "none";
+        
         isHorrorExe2 = true;
         start_horror(1);
       }
@@ -256,8 +278,6 @@ window.addEventListener('scroll', () => {
   }
 });
 
-
-let first_flag = true;
 /*
  * 0: id名
  * 1: top
@@ -287,19 +307,12 @@ let horrorWindowList = [
   ['horrorPopup19', "74%", "20%", "6rem", "50deg"],
   ['horrorPopup20', "65%", "90%", "3rem", "10deg"]
 ];
-const noiseKimoi = document.getElementById('noise_kimoi');
-const reivoice = document.getElementById('reivoice');
-noiseKimoi.pause();
-noiseKimoi.currentTime = 0;
-reivoice.pause();
-reivoice.currentTime = 0;
 let i_horror = 0;
 let variables = [];
 async function start_horror(effect_pattern) {
   let sleep_time = 1500;
   let len = horrorWindowList.length;
   let rand = Math.floor(Math.random() * len);
-  let horror;
   let voice_rand = Math.floor(Math.random() * 2);
 
   if(first_flag){
@@ -347,12 +360,9 @@ async function start_horror(effect_pattern) {
   }
 }
 
-
 //===============================================================
 // 文字色変更演出
 //===============================================================
-const trigger = document.getElementById('trigger');
-
 var isExe = false;
 window.addEventListener('scroll', () => {
   const triggerRect = trigger.getBoundingClientRect();
@@ -360,6 +370,8 @@ window.addEventListener('scroll', () => {
   if (triggerRect.top < triggerPoint && triggerRect.bottom > triggerPoint) {
     if(!isExe){
       isExe = true;
+      isHorrorExe = true;
+      isHorrorExe2 = true;
       start_red();
     }else{
       document.body.style.color = 'red';
@@ -375,6 +387,9 @@ async function start_red() {
     $('html, body').css('overflow', 'hidden');
     document.body.style.color = 'red';
     await sleep(500);
+
+    /* ホラー演出表示したポップアップメニューを非表示にする*/
+    horror.style.display = "none";
     for(i=0; i<variables.length; i++){
       variables[i].style.display = "none";
     }
