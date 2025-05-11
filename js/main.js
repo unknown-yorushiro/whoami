@@ -415,13 +415,14 @@ window.addEventListener('scroll', () => {
   const ftriggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
   if (ftriggerRect.top < ftriggerPoint && ftriggerRect.bottom > ftriggerPoint) {
     if(!isFinalEffectExe){
-      isFinalEffect = true;
+      isFinalEffectExe = true;
       startFinalEffect();
     }
   }
 });
 
 async function startFinalEffect(){
+  $('html, body').css('overflow', 'hidden');
   noiseMovie.play();
   noiseMovie.muted =false;
   whitenoise.play();
