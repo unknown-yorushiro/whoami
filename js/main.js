@@ -374,7 +374,7 @@ async function start_red() {
     $('html, body').css('overflow', 'hidden');
     document.body.style.color = 'red';
     await sleep(500);
-    for(i=0; i<variable.length; i++){
+    for(i=0; i<variables.length; i++){
       variables[i].style.display = "none";
     }
   
