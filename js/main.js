@@ -377,8 +377,7 @@ async function start_red() {
     for(i=0; i<variable.length; i++){
       variables[i].style.display = "none";
     }
-    noiseKimoi.pause();
-    reivoice.pause();
+  
     document.getElementById('overlay').classList.remove('visible');
     $('html, body').css('overflow', '');
 }
