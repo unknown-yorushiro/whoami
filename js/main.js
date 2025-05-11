@@ -238,6 +238,8 @@ let horror;
 const noiseKimoi = document.getElementById('noise_kimoi');
 const reivoice = document.getElementById('reivoice');
 const whitenoise = document.getElementById('whitenoise');
+/*各種動画の定義*/
+const noiseMovie = document.getElementById('noise_movie')
 /*音声の初期化*/
 noiseKimoi.pause();
 noiseKimoi.currentTime = 0;
@@ -417,8 +419,25 @@ window.addEventListener('scroll', () => {
 });
 
 async function startFinalEffect(){
+  noiseMovie.play();
+  noiseMovie.muted =false;
   whitenoise.play();
+  await sleep(3000);
+  stopAssets(noiseMovie, 0);
+  stopAssets(whitenoise, 1);
 }
+
+function stopAssets(assetId, assetType){
+  if(assetType == 0){
+    assetId.pause();
+    assetId.currentTime = 0;
+    assetId.muted = true;
+  }else if(assetType == 1){
+    assetId.pause();
+    assetId.currentTime = 0;
+  }
+}
+  
 //===============================================================
 // 現在時刻取得処理→2時間前時間に変更処理
 //===============================================================
