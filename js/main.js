@@ -313,7 +313,8 @@ async function start_horror(effect_pattern) {
     horror.style.left = horrorWindowList[rand][2];
     horror.style.fontSize = horrorWindowList[rand][3];
     horror.style.transform = "translate(-50%,-50%) rotate(" + horrorWindowList[rand][4] + ")";
-}
+  }
+
   if(voice_rand == 0){
     noiseKimoi.play();
   }else if(voice_rand == 1){
@@ -324,23 +325,24 @@ async function start_horror(effect_pattern) {
     horror.style.display = "block";
     await sleep(2000);
     horror.style.display = "none";
-
-    if(voice_rand == 0){
-      noiseKimoi.pause();
-      noiseKimoi.currentTime = 0;
-    }else if(voice_rand == 1){
-      reivoice.pause();
-      reivoice.currentTime = 0;
-    }
+    
     await sleep(5000);
     isHorrorExe = false;
   }else if (effect_pattern == 1){
     variables[i_horror] = horror;
     horrorWindowList.push(horrorWindowList.splice(rand, 1)); // 配列のランダム値に対応するインデックスを得たうえで元々の配列から取り除く
     variables[i_horror].style.display= "block";
-    await sleep(2500);
+    await sleep(2000);
     i_horror++;
     isHorrorExe2 = false;
+  }
+
+  if(voice_rand == 0){
+    noiseKimoi.pause();
+    noiseKimoi.currentTime = 0;
+  }else if(voice_rand == 1){
+    reivoice.pause();
+    reivoice.currentTime = 0;
   }
 }
 
