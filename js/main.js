@@ -417,7 +417,7 @@ window.addEventListener('scroll', () => {
 });
 
 async function startFinalEffect(){
-  
+  whitenoise.play();
 }
 //===============================================================
 // 現在時刻取得処理→2時間前時間に変更処理
