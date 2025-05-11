@@ -535,3 +535,22 @@ div.padding0 {
 .blink-slow{
   animation: blink 12.0s linear infinite;
 }
+
+/*動画再生用定義*/
+.video_wrapper {
+    display: none;
+    z-index: 5000;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.video_wrapper > video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    min-width: 100%;
+    min-height: 100%;
+}
