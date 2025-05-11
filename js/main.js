@@ -246,6 +246,7 @@ window.addEventListener('scroll', () => {
     const horror_triggerPoint2 = window.innerHeight / 2 + 100; // 中心より100px下
     if (horror_triggerRect2.top < horror_triggerPoint2 && horror_triggerRect2.bottom > horror_triggerPoint2) {
       if (!isHorrorExe2){
+        isHorrorExe = true;
         isHorrorExe2 = true;
         start_horror(1);
       }
