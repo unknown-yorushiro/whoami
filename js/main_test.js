@@ -1,20 +1,3 @@
-
-
- $('.button').click(function(){
-  var buttonId = $(this).attr('id');
-  $('#modal-container').removeAttr('class').addClass(buttonId);
-  $('body').addClass('modal-active');
-})
-
-$('#modal-container').click(function(){
-  $(this).addClass('out');
-  $('body').removeClass('modal-active');
-});
-
-
-
-
-
 //===============================================================
 // メニュー制御用の関数とイベント設定（※バージョン2025-1）
 //===============================================================
@@ -115,7 +98,15 @@ $(function () {
     });
   }
 
-  yemoveClass('large-screen').addClass('small-screen');
+  //-------------------------------------------------
+  // レスポンシブ時の表示制御 (リサイズ時)
+  //-------------------------------------------------
+  const handleResize = debounce(function () {
+    const windowWidth = $(window).width();
+
+    // bodyクラスの制御 (small-screen / large-screen)
+    if (windowWidth < breakPoint) {
+      $('body').removeClass('large-screen').addClass('small-screen');
     } else {
       $('body').removeClass('small-screen').addClass('large-screen');
       // PC表示になったら、ハンバーガー解除 + メニューを開く
@@ -182,7 +173,6 @@ $(function () {
   // 例：header nav へドロップダウンだけ適用（ハンバーガー連動なし）
   //initDropdown($('header nav'), isTouchDevice);
 });
-
 
 //===============================================================
 // スムーススクロール（※バージョン2024-1）※通常タイプ
@@ -539,7 +529,7 @@ displayConnectHeader.innerHTML = leftSpace + "CONNECTING ";
     for(let i=1; i<=waitCnt; i++){
         if(i%4== 0){
             displayConnectHeader.innerHTML = leftSpace + "CONNECTING ...";
-　　　　　}else if(i == l){
+        }else if(i == l){
             displayConnectHeader.innerHTML = leftSpace + "CONNECTING ..";
             l = l+4;
         }else if(i%2== 0){
@@ -597,11 +587,6 @@ async function psDisplay(){
       next();
     }
 }
-
-
-
-
-
 
 
 
@@ -674,4 +659,27 @@ const phrases = [
    ''
 ];
 
-
+isPsExe = false;
+async function psDisplay(){
+    if(!isPsExe){
+      isPsExe = true;
+      document.getElementById("ps-click").innerHTML = "";
+      await sleep(5000);
+      const el = document.querySelector('.effect-text');
+      const fx = new TextScramble(el);
+      
+      let counter = 0;
+      const next = () => {
+        if(phrases.length == counter){
+          isPsExe = false;
+          return;
+        }
+        fx.setText(phrases[counter]).then(() => {
+          setTimeout(next, 4500);
+        });
+        counter++;
+      }
+      
+      next();
+    }
+}
