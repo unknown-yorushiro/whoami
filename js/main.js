@@ -174,6 +174,7 @@ $(function () {
   //initDropdown($('header nav'), isTouchDevice);
 });
 
+
 //===============================================================
 // スムーススクロール（※バージョン2024-1）※通常タイプ
 //===============================================================
@@ -238,7 +239,7 @@ const noiseKimoi = document.getElementById('noise_kimoi');
 const reivoice = document.getElementById('reivoice');
 const whitenoise = document.getElementById('whitenoise');
 /*各種動画の定義*/
-const noiseMovie = document.getElementById('noise_movie');
+const noiseMovie = document.getElementById('noise_movie')
 /*音声の初期化*/
 noiseKimoi.pause();
 noiseKimoi.currentTime = 0;
@@ -272,7 +273,8 @@ window.addEventListener('scroll', () => {
       if (!isHorrorExe2){
         /* 1回目の演出が再度行われないようにする*/
         isHorrorExe = true;
-        horror.style.display = "none";
+        //horror.style.display = "none";
+        
         isHorrorExe2 = true;
         start_horror(1);
       }
@@ -347,14 +349,14 @@ async function start_horror(effect_pattern) {
     await sleep(5000);
     isHorrorExe = false;
   }else if (effect_pattern == 1){
-    if (len != 1){
-    variables[i_horror] = horror;
-    horrorWindowList.splice(rand, 1); // 配列のランダム値に対応するインデックスを得たうえで元々の配列から取り除く
-    variables[i_horror].style.display= "block";
-    await sleep(3000);
-    i_horror++;
-    isHorrorExe2 = false;
-    }
+    if(len != 0){
+      variables[i_horror] = horror;
+      horrorWindowList.splice(rand, 1);
+      variables[i_horror].style.display= "block";
+      await sleep(2000);
+      i_horror++;
+      isHorrorExe2 = false;
+    }   
   }
 
   if(voice_rand == 0){
@@ -404,18 +406,6 @@ async function start_red() {
     $('html, body').css('overflow', '');
 }
 
-function scrollTest(){
-    while(flag){
-        window.scrollBy({
-  top: 100,
-  left: 100,
-  behavior: "smooth"
-});
-
-    }
-}
-     
-
 //===============================================================
 // 最終演出
 //===============================================================
@@ -428,11 +418,11 @@ window.addEventListener('scroll', () => {
       isFinalEffectExe = true;
       startFinalEffect();
     }
-}
+  }
 });
 
 async function startFinalEffect(){
-  alert("check");
+  $('html, body').css('overflow', 'hidden');
   noiseMovie.play();
   noiseMovie.muted =false;
   whitenoise.play();
@@ -477,118 +467,6 @@ const hour = String(gDate.getHours()).padStart(2, '0');
 const formatted = `${month}月${day}日${hour}時`;
 // HTMLに表示
 document.getElementById("output").textContent = formatted;
-
-
-//===============================================================
-// 緊急警告演出
-//===============================================================
-//グローバル変数
-const emergencyTrigger = document.getElementById('emergency-trigger');
-const emergencyModalContainer = document.querySelector('#modal-container.emergency');
-/* ヘッダー */
-const modalHeader = document.querySelector('.modal-header');
-//フラグ
-var isEmergencyExe = false;
-
-
-/* 特定の行通過時演出 */
-window.addEventListener('scroll', () => {
-    const emergencyTriggerRect =     emergencyTrigger.getBoundingClientRect();
-    const emergencyTriggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
-
-    if (emergencyTriggerRect.top < emergencyTriggerPoint && emergencyTriggerRect.bottom > emergencyTriggerPoint) {
-        if(!isEmergencyExe){
-            isEmergencyExe = true;
-            emergencyModalContainer.style.display = "table";
-         }
-    }
-});
-
-
-/* モーダルウィンドウのボタンを押下する */
-function pushEmergencyModalButton(){
-    document.querySelector('.modal-button').style.display = "none";
-    /* 現在のテキストを非表示 */
-      document.getElementById("ps-click").innerHTML = "";
-    connectHeader();
-}
-
-
-/* ヘッダーを変化させて待機させる */
-async function connectHeader(){
-    displayConnectHeader = document.getElementById("change");
-    let l = 3;
-    let waitCnt = Math.floor(Math.random() * 4) + 8;
-    let leftSpace = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-
-    /* 初期変更 */
-    modalHeader.style.textAlign = "left";
-displayConnectHeader.innerHTML = leftSpace + "CONNECTING ";
-    await sleep(1000);
-
-    for(let i=1; i<=waitCnt; i++){
-        if(i%4== 0){
-            displayConnectHeader.innerHTML = leftSpace + "CONNECTING ...";
-        }else if(i == l){
-            displayConnectHeader.innerHTML = leftSpace + "CONNECTING ..";
-            l = l+4;
-        }else if(i%2== 0){
-            displayConnectHeader.innerHTML = leftSpace + "CONNECTING .";
-        }else if (i%2== 1){
-            displayConnectHeader.innerHTML = leftSpace + "CONNECTING ";
-        }
-
-        if(i == waitCnt){
-            await sleep(250);
-        }else{
-            await sleep(1000);
-        }
-    }
-
-    displayConnectHeader.innerHTML = leftSpace + "CONNECTED ";
-    psDisplay();
-}
-
-
-/* モーダルクローズ処理 */
-function closeEmergencyModal(){
-    emergencyModalContainer.style.display = "none";
-    //const cancelEmergencyButton = document.querySelector('.modal-cancel');
-        //cancelEmergencyButton.classList.add('animation-name');
-    
-
-}
-
-
-let isPsExe = false;
-async function psDisplay(){
-    if(!isPsExe){
-      isPsExe = true;
-      await sleep(2500);
-      const el = document.querySelector(".effect-text");
-      
-
-      const fx = new TextScramble(el);
-      
-      let counter = 0;
-      const next = () => {
-        if(phrases.length == counter){
-          isPsExe = false;
-          const cancelEmergencyButton = document.querySelector('.modal-cancel');
-          cancelEmergencyButton.style.display = "block";
-          return;
-        }
-        fx.setText(phrases[counter]).then(() => {
-          setTimeout(next, 4500);
-        });
-        counter++;
-      }
-      
-      next();
-    }
-}
-
-
 
 //===============================================================
 // 追記事項表示時の動的演出
@@ -658,7 +536,6 @@ const phrases = [
    '以上だ。……では、また何処かで。',
    ''
 ];
-
 isPsExe = false;
 async function psDisplay(){
     if(!isPsExe){
