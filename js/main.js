@@ -726,10 +726,10 @@ function stopAssets(assetId, assetType) {
     assetId.currentTime = 0;
   }
 
-      const a = document.createElement('a');
-      a.href = './assets/files/PASS=十六夜家に関係のある神話生物_Format=English.pdf'; // 相対または絶対パス
-      a.download = 'PASS=十六夜家に関係のある神話生物_Format=English.pdf';       // 保存時のファイル名
-      a.click();
+  const a = document.createElement('a');
+  a.href = './assets/files/PASS=十六夜家に関係のある神話生物_Format=English.pdf'; // 相対または絶対パス
+  a.download = 'PASS=十六夜家に関係のある神話生物_Format=English.pdf';       // 保存時のファイル名
+  a.click();
 
   //window.open('about:blank','_self').close()
 }
