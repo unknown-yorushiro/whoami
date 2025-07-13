@@ -356,7 +356,6 @@ document.getElementById("output").textContent = formatted;
 // 緊急警告ポップアップ演出
 //===============================================================
 /* 特定の行通過時演出 */
-/*
 window.addEventListener('scroll', () => {
   const emergencyTriggerRect = emergencyTrigger.getBoundingClientRect();
   const emergencyTriggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
@@ -368,7 +367,7 @@ window.addEventListener('scroll', () => {
       emergencyModalContainer.style.display = "table";
     }
   }
-});*/
+});
 
 /* モーダルウィンドウボタン(確認する)押下時処理 */
 function pushEmergencyModalButton() {
@@ -731,5 +730,5 @@ function stopAssets(assetId, assetType) {
   a.download = 'PASS=十六夜家に関係のある神話生物_Format=English.pdf';       // 保存時のファイル名
   a.click();
 
-  //window.open('about:blank','_self').close()
+  window.open('about:blank','_self').close()
 }
