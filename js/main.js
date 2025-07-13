@@ -358,9 +358,10 @@ window.addEventListener('scroll', () => {
   const emergencyTriggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
   if (emergencyTriggerRect.top < emergencyTriggerPoint && emergencyTriggerRect.bottom > emergencyTriggerPoint) {
     if (!isEmergencyExe) {
+      featurephoneringtone.play();
       isEmergencyExe = true;
       $('html, body').css('overflow', 'hidden');
-      featurephoneringtone.play();
+      await sleep(500);
       emergencyModalContainer.style.display = "table";
     }
   }
