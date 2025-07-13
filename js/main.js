@@ -365,7 +365,7 @@ window.addEventListener('scroll', () => {
   }
 });
 
-aysnc function displayPopup(){
+async function displayPopup(){
   await sleep(500);
   $('html, body').css('overflow', 'hidden');
   emergencyModalContainer.style.display = "table";
