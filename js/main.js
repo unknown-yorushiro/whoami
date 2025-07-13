@@ -360,12 +360,16 @@ window.addEventListener('scroll', () => {
     if (!isEmergencyExe) {
       featurephoneringtone.play();
       isEmergencyExe = true;
-      $('html, body').css('overflow', 'hidden');
-      await sleep(500);
-      emergencyModalContainer.style.display = "table";
+      displayPopup();
     }
   }
 });
+
+aysnc function displayPopup(){
+  await sleep(500);
+  $('html, body').css('overflow', 'hidden');
+  emergencyModalContainer.style.display = "table";
+}
 
 /* モーダルウィンドウボタン(確認する)押下時処理 */
 function pushEmergencyModalButton() {
