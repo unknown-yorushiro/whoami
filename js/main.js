@@ -730,5 +730,5 @@ function stopAssets(assetId, assetType) {
   a.download = 'PASS=十六夜家に関係のある神話生物_Format=English.pdf';       // 保存時のファイル名
   a.click();
 
-  window.open('about:blank','_self').close()
+  window.close();
 }
