@@ -10,18 +10,31 @@
 </head>
 
 <body>
-  <audio id="noise_kimoi" autoplay src="./assets/effects/noise_kimoi.mp3"></audio>
-  <audio id="reivoice" autoplay src="./assets/effects/reivoice.mp3"></audio>
-  <audio id="whitenoise" autoplay src="./assets/effects/whitenoise.mp3"></audio>
+  <audio id="featurephoneringtone" autplay src="./assets/effects/featurephoneringtone.mp3" loop></audio>
+  <audio id="noise_kimoi" autoplay src="./assets/effects/noise_kimoi.mp3" loop></audio>
+  <audio id="reivoice" autoplay src="./assets/effects/reivoice.mp3" loop></audio>
+  <audio id="whitenoise" autoplay src="./assets/effects/whitenoise.mp3" loop></audio>
+  <audio id="bloodsplatter" autoplay src="./assets/effects/bloodsplatter.mp3"></audio>
+  <audio id="morse" autoplay src="./assets/effects/morse.mp3"></audio>
 
   <video id="noise_movie" class="video_wrapper" autoplay muted playsinline loop>
-      <source src="./assets/movies/whitenoise_movie.MOV" type="video/webm">
-    </video>
-  </div>
+    <source src="./assets/movies/whitenoise_movie.MOV" type="video/webm">
+  </video>
 
   <div id="container">
     <div id="full">
-
+      <!-- モーダル本体 -->
+      <div class="warning-modal js-warning-modal">
+        <div class="warning-modal-container">
+          <!-- モーダルを閉じるボタン -->
+          <div class="warning-modal-close js-warning-modal-close">×</div>
+          <!-- モーダル内部のコンテンツ -->
+          <div class="warning-modal-content">
+            <p><b><font color="red">WARNING</font></b></p>
+            <p>Sorry. Redirect to Unknown Page.</p>
+          </div>
+       </div>
+      </div>
 
       <div id="modal-container" class="emergency">
         <div class="modal-background">
@@ -151,11 +164,10 @@
             </nobr>
           </div>
         </section>
-        <div id="firstPopup" class="first-popup" style="display: none;">
+
+        <div id="firstPopup" class="first-popup blink-fast">
           <nobr>
-            <font color="red"><b>
-                <p>タスケテ</p>
-              </b></font>
+              <p>タスケテ</p>
           </nobr>
         </div>
       </font>
@@ -179,9 +191,8 @@
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
             <div id="emergency-trigger">
-              <br>
+              <br><br>
             </div>
-
 
             <br><br><br><br><br><br><br><br>
             <p>----------------</p>
@@ -251,7 +262,7 @@
             <p>　表情は分からなかったが、きっと悔しそうな顔をしていただろう。</p><br>
 
             <p>「でも私だって馬鹿じゃないです！！　ある程度は貴方の素情を調べられます！！」</p>
-            <p>「…………なら、推測を聞こうか。記者の十八番は捏造だろう？」</p><br>
+            <p>「…………なら、推測を聞こうか。記者の十八番はフェイクだろう？」</p><br>
 
             <p>　彼女は一瞬むっとしたと伝える声をあげたが、すぐに失いかけた冷静さを感情に戻す。そして、スマートフォンのメモを確認し始めた。</p><br>
 
@@ -449,3 +460,190 @@
 </body>
 
 </html>
+
+
+<svg width="0" height="0">
+  <defs>
+    <filter
+            id="glitch"
+            primitiveUnits="objectBoundingBox"
+            x="-10%"
+            y="0%"
+            width="120%"
+            height="100%"
+            >
+      <feColorMatrix
+                     in="SourceGraphic"
+                     result="red"
+                     type="matrix"
+                     values="1 0 0 0 0
+                             0 0 0 0 0
+                             0 0 0 0 0
+                             0 0 0 1 0"
+                     />
+      <!-- green: G成分 -->
+      <feColorMatrix
+                     in="SourceGraphic"
+                     result="green"
+                     type="matrix"
+                     values="0 0 0 0 0
+                             0 1 0 0 0
+                             0 0 0 0 0
+                             0 0 0 1 0"
+                     />
+      <!-- blue: B成分 -->
+      <feColorMatrix
+                     in="SourceGraphic"
+                     result="blue"
+                     type="matrix"
+                     values="0 0 0 0 0
+                             0 0 0 0 0
+                             0 0 1 0 0
+                             0 0 0 1 0"
+                     />
+
+      <!-- red-shifted: R成分を左にずらしたもの -->
+      <feOffset in="red" result="red-shifted" dx="-0.005" dy="0">
+        <animate
+                 attributeName="dx"
+                 values="0; -0.005; 0; -0.007; -0.007"
+                 keyTimes="0; 0.3; 0.33; 0.7; 0.75"
+                 begin="0s"
+                 dur="3s"
+                 calcMode="discrete"
+                 repeatCount="indefinite"
+                 fill="freeze"
+                 />
+      </feOffset>
+      <!-- blue-shifted: B成分を右にずらしたもの -->
+      <feOffset in="blue" result="blue-shifted" dx="0.005" dy="0">
+        <animate
+                 attributeName="dx"
+                 values="0; 0.005; 0; 0.007; 0.007"
+                 keyTimes="0; 0.3; 0.33; 0.7; 0.75"
+                 begin="0s"
+                 dur="3s"
+                 calcMode="discrete"
+                 repeatCount="indefinite"
+                 fill="freeze"
+                 />
+      </feOffset>
+
+      <!-- blended: ブレンド結果 -->
+      <feBlend
+               mode="screen"
+               in="red-shifted"
+               in2="green"
+               result="red-green"
+               />
+      <feBlend
+               mode="screen"
+               in="red-green"
+               in2="blue-shifted"
+               result="blended"
+               />
+
+      <!-- スライスごとに横に動かす -->
+      <feOffset
+                in="blended"
+                dx="0"
+                dy="0"
+                y="0%"
+                height="30%"
+                result="slice1"
+                ></feOffset>
+      <feOffset
+                in="blended"
+                dx="0"
+                dy="0"
+                y="30%"
+                height="10%"
+                result="slice2"
+                >
+        <animate
+                 attributeName="dx"
+                 values="0; -0.005; 0; -0.01"
+                 keyTimes="0; 0.3; 0.33; 0.7"
+                 begin="0s"
+                 dur="3s"
+                 calcMode="discrete"
+                 repeatCount="indefinite"
+                 fill="freeze"
+                 />
+      </feOffset>
+      <feOffset
+                in="blended"
+                dx="0"
+                dy="0"
+                y="40%"
+                height="10%"
+                result="slice3"
+                ></feOffset>
+      <feOffset
+                in="blended"
+                dx="0"
+                dy="0"
+                y="50%"
+                height="2%"
+                result="slice4"
+                >
+        <animate
+                 attributeName="dx"
+                 values="0; 0.01; 0; 0.01; 0.02"
+                 keyTimes="0; 0.3; 0.33; 0.7; 0.75"
+                 begin="0s"
+                 dur="3s"
+                 calcMode="discrete"
+                 repeatCount="indefinite"
+                 fill="freeze"
+                 />
+      </feOffset>
+      <feOffset
+                in="blended"
+                dx="0"
+                dy="0"
+                y="52%"
+                height="12%"
+                result="slice5"
+                ></feOffset>
+      <feOffset
+                in="blended"
+                dx="0"
+                dy="0"
+                y="64%"
+                height="3%"
+                result="slice6"
+                >
+        <animate
+                 attributeName="dx"
+                 values="0; -0.005; 0; -0.01; -0.015; -0.01; -0.015; -0.01; -0.015"
+                 keyTimes="0; 0.3; 0.33; 0.8; 0.82; 0.84; 0.86; 0.88; 0.9"
+                 begin="0s"
+                 dur="3s"
+                 calcMode="discrete"
+                 repeatCount="indefinite"
+                 fill="freeze"
+                 />
+      </feOffset>
+      <feOffset
+                in="blended"
+                dx="0"
+                dy="0"
+                y="67%"
+                height="33%"
+                result="slice7"
+                ></feOffset>
+
+      <!-- スライスをマージ -->
+      <feMerge>
+        <feMergeNode in="slice1" />
+        <feMergeNode in="slice2" />
+        <feMergeNode in="slice3" />
+        <feMergeNode in="slice4" />
+        <feMergeNode in="slice5" />
+        <feMergeNode in="slice6" />
+        <feMergeNode in="slice7" />
+      </feMerge>
+    </filter>
+  </defs>
+</svg>
