@@ -1,586 +1,526 @@
-@charset "utf-8";
-
+@charset "UTF-8";
 /*Font Awesomeの読み込み
 ---------------------------------------------------------------------------*/
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
-
+/*@import "compass/css3";*/
 /*font 読み込み*/
-@font-face { 
+@font-face {
   /* ① ここにfont-familyで指定したい名前を書く*/
-  font-family: "onryou"; 
-  /* フォントが置かれているパスを書く */ 
+  font-family: "onryou";
+  /* フォントが置かれているパスを書く */
   src: url("../assets/fonts/onryou.TTF") format("truetype");
 }
-
 /*CSSカスタムプロパティ（サイト全体を一括管理する為の設定）
 ---------------------------------------------------------------------------*/
 :root {
-	/*余白の一括管理用。主に左右の余白に使っています。2rem＝２文字分。*/
-	--content-space: 2rem;
+  /*余白の一括管理用。主に左右の余白に使っています。2rem＝２文字分。*/
+  --content-space: 2rem;
 }
 
 /*animation11のキーフレーム設定（汎用的）
 ---------------------------------------------------------------------------*/
 @keyframes animation1 {
-	0% {
-		left: -200px;
-	}
-
-	100% {
-		left: 0px;
-	}
+  0% {
+    left: -200px;
+  }
+  100% {
+    left: 0px;
+  }
 }
-
-
 /*opa1のキーフレーム設定（汎用的）
 ---------------------------------------------------------------------------*/
 @keyframes opa1 {
-	0% {
-		opacity: 0;
-	}
-
-	100% {
-		opacity: 1;
-	}
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
-
-
 /*全体の設定
 ---------------------------------------------------------------------------*/
 body * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
 body {
-	font-size: 13px;
-	/*基準となるフォントサイズ。*/
+  font-size: 13px;
+  /*基準となるフォントサイズ。*/
 }
 
 /*画面幅900px以上の追加指定*/
-@media screen and (min-width:900px) {
-
-	html,
-	body {
-		font-size: 15px;
-		/*基準となるフォントサイズ。*/
-	}
-
+@media screen and (min-width: 900px) {
+  html,
+  body {
+    font-size: 15px;
+    /*基準となるフォントサイズ。*/
+  }
 }
-
 /*追加指定ここまで*/
-
-
 body {
-	margin: 0;
-	padding: 0;
-
-	font-family: "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
-	/*フォント種類（ゴシック）*/
-	-webkit-text-size-adjust: none;
-	background: #000;
-	/*背景色*/
-	color: #FFF;
-	/*文字色*/
-	line-height: 2;
-	/*行間*/
-	overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
+  /*フォント種類（ゴシック）*/
+  -webkit-text-size-adjust: none;
+  background: #000;
+  /*背景色*/
+  color: #FFF;
+  /*文字色*/
+  line-height: 2;
+  /*行間*/
+  overflow-x: hidden;
 }
-
 
 #full {
-	max-width: 850px;
-	margin-left: auto;
-	margin-right: auto;
-	background: #000;
-	/*背景色*/
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #000;
+  /*背景色*/
 }
 
 /*リセット*/
 figure {
-	margin: 0;
+  margin: 0;
 }
 
 dd {
-	margin: 0;
+  margin: 0;
 }
 
 nav,
 ul,
 li,
 ol {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 nav ul {
-	list-style: none;
+  list-style: none;
 }
 
 /*table全般の設定*/
 table {
-	border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 /*画像全般の設定*/
 img {
-	border: none;
-	max-width: 100%;
-	height: auto;
-	vertical-align: middle;
+  border: none;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
 }
 
 /*videoタグ*/
 video {
-	max-width: 100%;
+  max-width: 100%;
 }
 
 /*iframeタグ*/
 iframe {
-	width: 100%;
+  width: 100%;
 }
 
 /*他*/
 input {
-	font-size: 1rem;
+  font-size: 1rem;
 }
 
 /*section*/
 section {
-	padding: var(--content-space);
-	/*section内の余白。冒頭のcontent-spaceを読み込みます。*/
+  padding: var(--content-space);
+  /*section内の余白。冒頭のcontent-spaceを読み込みます。*/
 }
 
 #trigger {
-	background-color: #000;
+  background-color: #000;
 }
 
-#horror-trigger{
-	background-color: #000;
+#horror-trigger {
+  background-color: #000;
 }
 
 /*リンクテキスト全般の設定
 ---------------------------------------------------------------------------*/
 a {
-	color: inherit;
-	transition: 0.3s;
-	/*hoverまでにかける時間。0.3秒。*/
+  color: inherit;
+  transition: 0.3s;
+  /*hoverまでにかける時間。0.3秒。*/
 }
 
 /*マウスオン時*/
 a:hover {
-	filter: brightness(1.1);
-	/*少しだけ明るくする*/
+  filter: brightness(1.1);
+  /*少しだけ明るくする*/
 }
-
 
 /*コンテナー（サイト全体を囲むブロック）
 ---------------------------------------------------------------------------*/
 #container {
-	overflow-x: hidden;
-	position: relative;
-	animation: opa1 1s 0.4s both;
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-	max-width: 1800px;
-	/*サイトの最大幅。これ以上広がらない。*/
-	margin: 0 auto;
+  overflow-x: hidden;
+  position: relative;
+  animation: opa1 1s 0.4s both;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1800px;
+  /*サイトの最大幅。これ以上広がらない。*/
+  margin: 0 auto;
 }
-
 
 /*コンテンツ
 ---------------------------------------------------------------------------*/
 /*コンテンツブロック*/
 #contents {
-	flex: 1;
+  flex: 1;
 }
 
 /*コンテンツ内で使用するul,ol要素（リストタグ）*/
 #contents ul,
 #contents ol {
-	margin-left: 2rem;
-	margin-right: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
-
 
 /*p要素（段落タグ）
 ---------------------------------------------------------------------------*/
 p {
-	margin-left: 1rem;
-	/*左に１文字分のスペース*/
-	margin-right: 1rem;
-	/*右に１文字分のスペース*/
+  margin-left: 1rem;
+  /*左に１文字分のスペース*/
+  margin-right: 1rem;
+  /*右に１文字分のスペース*/
 }
-
 
 /*フッター設定
 ---------------------------------------------------------------------------*/
 footer a {
-	color: inherit;
-	text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 footer small {
-	font-size: 100%;
+  font-size: 100%;
 }
 
 footer {
-	margin-top: auto;
-	font-size: 0.8rem;
-	/*文字サイズ。80%。*/
-	background: #eee;
-	/*背景色*/
-	color: #555;
-	/*文字色*/
-	text-align: center;
-	/*内容をセンタリング*/
-	padding: 1rem;
-	/*ボックス内の余白。１文字分。*/
+  margin-top: auto;
+  font-size: 0.8rem;
+  /*文字サイズ。80%。*/
+  background: #eee;
+  /*背景色*/
+  color: #555;
+  /*文字色*/
+  text-align: center;
+  /*内容をセンタリング*/
+  padding: 1rem;
+  /*ボックス内の余白。１文字分。*/
 }
-
 
 /*著作部分（※意図的に見えなくしたりしないで下さい。規約違反になります。）
 ---------------------------------------------------------------------------*/
 .pr a {
-	text-decoration: none;
-	display: flex;
-	background: #555;
-	color: #ccc;
-	text-align: right;
-	padding: 0.5rem 1rem;
-	font-size: 0.8rem;
+  text-decoration: none;
+  display: flex;
+  background: #555;
+  color: #ccc;
+  text-align: right;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
 }
 
 .pr a::before {
-	font-family: "Font Awesome 6 Free";
-	content: "\e2ca";
-	font-weight: bold;
-	margin-right: 0.5em;
+  font-family: "Font Awesome 6 Free";
+  content: "\e2ca";
+  font-weight: bold;
+  margin-right: 0.5em;
 }
-
 
 /*PAGE TOP（↑）設定
 ---------------------------------------------------------------------------*/
 .pagetop-show {
-	display: block;
+  display: block;
 }
 
 /*ボタンの設定*/
 .pagetop a {
-	display: block;
-	text-decoration: none;
-	text-align: center;
-	z-index: 99;
-	animation: opa1 1s 0.4s both;
-	position: fixed;
-	/*スクロールに追従しない(固定で表示)為の設定*/
-	right: 20px;
-	/*右からの配置場所指定*/
-	bottom: 20px;
-	/*下からの配置場所指定*/
-	color: #fff;
-	/*文字色*/
-	font-size: 1.5rem;
-	/*文字サイズ*/
-	background: rgba(0, 0, 0, 0.2);
-	/*背景色。0,0,0は黒の事で0.2は色が20%出た状態。*/
-	width: 60px;
-	/*幅*/
-	line-height: 60px;
-	/*高さ*/
-	border-radius: 50%;
-	/*円形にする*/
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  z-index: 99;
+  animation: opa1 1s 0.4s both;
+  position: fixed;
+  /*スクロールに追従しない(固定で表示)為の設定*/
+  right: 20px;
+  /*右からの配置場所指定*/
+  bottom: 20px;
+  /*下からの配置場所指定*/
+  color: #fff;
+  /*文字色*/
+  font-size: 1.5rem;
+  /*文字サイズ*/
+  background: rgba(0, 0, 0, 0.2);
+  /*背景色。0,0,0は黒の事で0.2は色が20%出た状態。*/
+  width: 60px;
+  /*幅*/
+  line-height: 60px;
+  /*高さ*/
+  border-radius: 50%;
+  /*円形にする*/
 }
-
 
 /*余白調整用
 ---------------------------------------------------------------------------*/
 section.padding0 {
-	padding: 0;
+  padding: 0;
 }
 
 div.padding0 {
-	margin-left: calc(-1 * var(--content-space));
-	margin-right: calc(-1 * var(--content-space));
+  margin-left: calc(-1 * var(--content-space));
+  margin-right: calc(-1 * var(--content-space));
 }
-
 
 /*その他
 ---------------------------------------------------------------------------*/
 .clearfix::after {
-	content: "";
-	display: block;
-	clear: both;
+  content: "";
+  display: block;
+  clear: both;
 }
 
 .color-check,
 .color-check a {
-	color: #ff0000 !important;
+  color: #ff0000 !important;
 }
 
 .l {
-	text-align: left !important;
+  text-align: left !important;
 }
 
 .c {
-	text-align: center !important;
+  text-align: center !important;
 }
 
 .r {
-	text-align: right !important;
+  text-align: right !important;
 }
 
 .ws {
-	width: 95%;
-	display: block;
+  width: 95%;
+  display: block;
 }
 
 .wl {
-	width: 95%;
-	display: block;
+  width: 95%;
+  display: block;
 }
 
 .mb0 {
-	margin-bottom: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .mb30 {
-	margin-bottom: 30px !important;
+  margin-bottom: 30px !important;
 }
 
 .look {
-	display: inline-block;
-	padding: 0px 10px;
-	background: #eee;
-	border: 1px solid #ccc;
-	color: #888;
-	border-radius: 3px;
-	margin: 5px 0;
-	word-break: break-all;
+  display: inline-block;
+  padding: 0px 10px;
+  background: #eee;
+  border: 1px solid #ccc;
+  color: #888;
+  border-radius: 3px;
+  margin: 5px 0;
+  word-break: break-all;
 }
 
 .small {
-	font-size: 0.75em;
+  font-size: 0.75em;
 }
 
 .large {
-	font-size: 2em;
-	letter-spacing: 0.1em;
+  font-size: 2em;
+  letter-spacing: 0.1em;
 }
 
 .pc {
-	display: none;
+  display: none;
 }
 
 .dn {
-	display: none !important;
+  display: none !important;
 }
 
 .block {
-	display: block !important;
+  display: block !important;
 }
 
 /*大きな画面の場合*/
 .large-screen .ws {
-	width: 48%;
-	display: inline;
+  width: 48%;
+  display: inline;
 }
 
 .large-screen .sh {
-	display: none;
+  display: none;
 }
 
 .large-screen .pc {
-	display: block;
+  display: block;
 }
-
 /* フェードインのアニメーション */
 @keyframes fadeIn {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-
-
-
-/* フェードインアニメーション */
-.box {
-	/* 変更：　iOS Safariでも動く */
-	transition: opacity 1s, visibility 0s ease 1s;
-	  
-	opacity: 0;
-	visibility: hidden;
-  }
-  
-  .box.is-show {  
-	/* 変更：　iOS Safariでも動く */
-	transition-delay: 0s;
-	
-	opacity: 1;
-	visibility: visible;
-  }
-
-  #overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(255, 0, 0, 1); /* 背景色と透明度 */
-	opacity: 0;
-	pointer-events: none;
-	transition: opacity 0.75s ease;
-	z-index: 9999;
-  }
-
-  #overlay.visible {
-	opacity: 1;
-	pointer-events: auto;
-  }
-
-  
-  /* 初期状態で非表示にする */
-  .fade-slide {
-	background-color: #4CAF50;
-	color: white;
-	padding: 20px;
-	border-radius: 5px;
-	opacity: 0;
-	transform: translateY(-50px);
-	transition: opacity 1s ease, transform 1s ease;
-  }
-  
-  /* フェードイン後、スライドアウトアニメーション */
-  .fade-slide.visible {
-	opacity: 1;
-	transform: translateY(0);
-  }
-  
-  .fade-slide.hidden {
-	opacity: 0;
-	transform: translateY(50px);
-  }
-  
-  
-#horror-popup-parts * {
-	margin: 0;
-	padding: 0;
-}
-
-/* ホラー演出用ポップアップウィンドウ */
-.horror-popup {
-	display: none;
-	position: fixed;
-	/*position: relative;*/
-	z-index: 2000;
-	top: 0%;
-    left: 0%;
-	transform: translate(-50%,-50%) rotate(-45deg);
-	/*right: 30px;
-	bottom: 100px;*/
-
-	/* 装飾 */
-	color: #ff0000; /*文字色*/
-	overflow: hidden;
-    text-align: center;
-}
-
-.first-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  color: #ff0000; /*文字色*/
-  font-size: 6rem;
-  z-index: 2000;
-  text-align: center;
-}
-
-/*追記表示用*/
-.ps-text:hover {
-	color: red;
-}
-
-.effect-text{
-  color: red;
-  font-size: 18px;
-  text-align: center;
-  padding-left: 0px;
-}
-
-.p-style{
-  margin: 0;
-  padding: 0;
-}
-
-@keyframes blink {
-  0%, 25%, 50%, 75%, 100% {
-    opacity: 1;
-  }
-  12.5%, 37.5%, 62.5%, 87.5% {
+  0% {
     opacity: 0;
   }
+  100% {
+    opacity: 1;
+  }
+}
+/* フェードインアニメーション */
+.box {
+  /* 変更：　iOS Safariでも動く */
+  transition: opacity 1s, visibility 0s ease 1s;
+  opacity: 0;
+  visibility: hidden;
 }
 
-.blink-fast {
-  animation: blink 0.75s linear infinite;
+.box.is-show {
+  /* 変更：　iOS Safariでも動く */
+  transition-delay: 0s;
+  opacity: 1;
+  visibility: visible;
 }
 
-.blink-slow{
-  animation: blink 12.0s linear infinite;
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 0, 0); /* 背景色と透明度 */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.75s ease;
+  z-index: 9999;
 }
 
-/*動画再生用定義*/
-.video_wrapper {
-    display: none;
-    z-index: 5000;
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+#overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.video_wrapper > video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    min-width: 100%;
-    min-height: 100%;
+/* 初期状態で非表示にする */
+.fade-slide {
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* フェードイン後、スライドアウトアニメーション */
+.fade-slide.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-slide.hidden {
+  opacity: 0;
+  transform: translateY(50px);
 }
 
 
 
-
-
-
-
-
-
-
- * {
+/* =================== */
+/*     自作デザイン     */
+/* =================== */
+/* ===================================== */
+/*     最初用モーダルウィンドウデザイン     */
+/* ===================================== */ 
+/* モーダルと背景の指定 */
+.warning-modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: rgba(0,0,0,50%);
+  padding: 40px 20px;
+  overflow: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s;
   box-sizing: border-box;
 }
-/*
-html, body {
-  min-height: 100%;
+
+/* モーダルの擬似要素の指定 */
+.warning-modal:before{
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
   height: 100%;
-  background: black;
-  background-size: cover;
-  background-position: top center;
-  font-family: helvetica neue, helvetica, arial, sans-serif;
-  font-weight: 200;
+  margin-left: -0.2em;
 }
-html.modal-active, body.modal-active {
-  overflow: hidden;
-}*/
+
+/* クラスが追加された時の指定 */
+.warning-modal.is-active{
+  opacity: 1;
+  visibility: visible;
+}
+
+/* モーダル内側の指定 */
+.warning-modal-container{
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 600px;
+  width: 90%;
+}
+
+/* モーダルを閉じるボタンの指定 */
+.warning-modal-close{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: -20px;
+  right: -20px;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  background: #000;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid white;
+}
+
+/* モーダルのコンテンツ部分の指定 */
+.warning-modal-content{
+  background: #fff;
+  text-align: left;
+  line-height: 1.8;
+  padding: 20px;
+}
+
+/* モーダルのコンテンツ部分のテキストの指定 */
+.warning-modal-content p{
+  color:black;
+  font-size: 16px;
+  margin: 1em 0;
+}
 
 
-/* 緊急警告用モーダルウィンドウ */
+/* ======================================== */
+/*     緊急警告用モーダルウィンドウデザイン    */
+/* ======================================== */
+/* コンテナ */
 #modal-container {
   position: fixed;
   inset: 0;
@@ -596,6 +536,8 @@ html.modal-active, body.modal-active {
   z-index: 0;
   transform: scale(1);
 }
+
+/* 背景 */
 #modal-container.emergency .modal-background {
   background: black;
 }
@@ -603,19 +545,12 @@ html.modal-active, body.modal-active {
   animation: blowUpModal 0.25s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 
-/*
-#modal-container.four.out .modal-background .modal {
-  animation: blowUpModalTwo 0.25s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-}
-*/
-
 #modal-container .modal-background {
   display: table-cell;
   background: rgba(0, 0, 0, 0.8);
   text-align: center;
   vertical-align: middle;
 }
-
 #modal-container .modal-background .modal {
   background: black;
   /*padding: 5%;*/
@@ -625,22 +560,79 @@ html.modal-active, body.modal-active {
   border: solid 3px red;
   /*font-weight: 300;*/
   position: relative;
-  border-radius:10px;
+  border-radius: 10px;
 }
-
 #modal-container .modal-background .modal h2 {
   font-size: 20px;
   line-height: 20%;
   /*margin-bottom: 15px;*/
 }
-
 #modal-container .modal-background .modal p {
   color: red;
   font-size: 18px;
   /*line-height: 80px;*/
 }
+#modal-container .modal-background .modal.modal-background-change {
+  animation: glitchTransition 2s forwards;
+}
 
+/* ヘッダー */
+.modal-header {
+  position: absolute;
+  background: red;
+  color: black;
+  text-align: center;
+  padding-left: 0px;
+  display: block;
+  top: 0%;
+  left: 0%;
+  height: 40px;
+  font-size: 20px;
+  width: 100%;
+  z-index: 5;
+}
+.modal-header h2 {
+  font-size: 20px;
+  line-height: 50%;
+  /*margin-bottom: 15px;*/
+}
 
+/* モーダル非表示 */
+.modal-cancel {
+  display: none;
+  position: absolute;
+  background: black;
+  text-align: center;
+  /*display: block;*/
+  top: 0%;
+  right: 0%;
+  height: 100%;
+  width: 15%;
+  z-index: 6;
+}
+
+/* メッセージ確認ボタン */
+.modal-button {
+  position: absolute;
+  display: block;
+  bottom: 10px;
+  left: 10%;
+  width: 80%;
+  line-height: 20px; /*ボタンの高さ*/
+  padding: 2%;
+  text-align: center;
+  background-color: red;
+  color: black;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+}
+.modal-button:hover {
+  /*transform: scale(1.3, 1.3);*/
+  animation: hoverButton 0.4s;
+}
+
+/* モーダルウィンドウ表示アニメーション */
 @keyframes blowUpModal {
   0% {
     transform: scale(0);
@@ -649,7 +641,6 @@ html.modal-active, body.modal-active {
     transform: scale(1);
   }
 }
-
 @keyframes blowUpModalTwo {
   0% {
     transform: scale(1);
@@ -660,64 +651,8 @@ html.modal-active, body.modal-active {
     opacity: 0;
   }
 }
-
-
-.modal-header {
-     position: absolute;
-     background: red;
-     color: black;
-     text-align: center;
-	 padding-left: 0px;
-     display: block;
-     top: 0%;
-     left: 0%;
-     height: 40px;
-     font-size: 20px;
-     width: 100%;
-     z-index: 5;
- }
-
-.modal-header h2{
-    font-size: 20px;
-    line-height: 50%;
-    /*margin-bottom: 15px;*/
-}
-
-.modal-cancel{
-     display: none;
-     position: absolute;
-     background: black;
-     text-align: center;
-     /*display: block;*/
-     top: 0%;
-     right: 0%;
-     height: 100%;
-     width: 15%;
-     z-index: 6;
-}
-
-.modal-button {
-    position: absolute;
-    display: block;
-    bottom: 10px;
-    left: 10%;
-    width: 80%;
-    line-height: 20px;	/*ボタンの高さ*/
-    padding: 2%;
-    text-align: center;
-    background-color: red;
-    color: black;
-    border-radius: 20px;
-    border: none;
-    font-size: 16px;
-}
- 
-.modal-button:hover {
-  /*transform: scale(1.3, 1.3);*/
-  animation: clickButton 0.4s
-}
-
-@keyframes clickButton{
+/* ボタンホバー時アニメーション */
+@keyframes hoverButton {
   45% {
     transform: scale(1.04, 1.04);
   }
@@ -732,44 +667,147 @@ html.modal-active, body.modal-active {
   }
 }
 
+/* ====================== */
+/*     背景グリッチ変更    */
+/* ====================== */
+ @keyframes glitchTransition {
+      0% {
+        background-color: #000; /* 初期：黒 */
+      }
+      40% {
+        background-color: #000;
+      }
+      45% {
+        background-color: #ff0040;
+      }
+      50% {
+        background-color: #00f0ff;
+      }
+      55% {
+        background-color: #fff600;
+      }
+      60% {
+        background-color: #ff00ff;
+      }
+      65% {
+        background-color: #0000ff;
+      }
+      70% {
+        background-color: #00ff9f;
+      }
+      75% {
+        background-color: #000;
+      }
+      100% {
+        background-color: #100087;
+      }
+    }
 
 
 
 
 
-/*.content {
-  min-height: 100%;
-  height: 100%;
-  background: black;
-  position: relative;
-  z-index: 0;
-}
-.content h1 {
-  padding: 75px 0 30px 0;
-  text-align: center;
-  font-size: 30px;
-  line-height: 30px;
-}
-.content .buttons {
-  max-width: 800px;
-  margin: 0 auto;
+/* ======================================= */
+/*     ホラー演出用ポップアップウィンドウ     */
+/* ======================================= */
+#horror-popup-parts * {
+  margin: 0;
   padding: 0;
+}
+
+/* 初回用 */
+.first-popup {
+  position: fixed;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ff0000; /*文字色*/
+  font-size: 9rem;
+  z-index: 2000;
   text-align: center;
 }
-.content .buttons .button {
-  display: inline-block;
+/* 初回以外 */
+.horror-popup {
+  display: none;
+  position: fixed;
+  /*position: relative;*/
+  z-index: 2000;
+  top: 0%;
+  left: 0%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  /*right: 30px;
+  bottom: 100px;*/
+  /* 装飾 */
+  color: #ff0000; /*文字色*/
+  overflow: hidden;
   text-align: center;
-  padding: 10px 15px;
-  margin: 10px;
-  background: red;
+}
+
+
+
+
+/*追記表示用*/
+.ps-text:hover {
+  color: red;
+}
+
+.effect-text {
+  color: red;
   font-size: 18px;
-  background-color: #efefef;
-  border-radius: 3px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
+  text-align: center;
+  padding-left: 0px;
 }
-.content .buttons .button:hover {
-  color: white;
-  background: #009bd5;
+
+.p-style {
+  margin: 0;
+  padding: 0;
 }
-*/
+
+@keyframes blink {
+  0%, 25%, 50%, 75%, 100% {
+    opacity: 1;
+  }
+  12.5%, 37.5%, 62.5%, 87.5% {
+    opacity: 0.4;
+  }
+}
+.blink-fast {
+  animation: blink 1s linear infinite;
+}
+
+.blink-slow {
+  animation: blink 12s linear infinite;
+}
+
+/*動画再生用定義*/
+.video_wrapper {
+  display: none;
+  z-index: 5000;
+  top:0;
+  left:0;
+  position: fixed;
+  width: 100vw;
+  height: auto;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
+
+/*
+.video_wrapper > video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  min-width: 100%;
+  min-height: 100%;
+}*/
+
+
+
+
+
+
+
+
