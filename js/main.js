@@ -317,17 +317,9 @@ window.onload = function(){
 //「閉じるボタン」をクリックしてモーダルを閉じる
 function modalClose() {
   modal.classList.remove('is-active');
-}
-close.addEventListener('click', modalClose);
-
-//「モーダルの外側」をクリックしてモーダルを閉じる
-function modalOut(e) {
-  if (e.target == modal) {
-    modal.classList.remove('is-active');
-  }
   $('html, body').css('overflow', '');
 }
-addEventListener('click', modalOut);
+close.addEventListener('click', modalClose);
 
 
 //===============================================================
