@@ -707,12 +707,22 @@ async function startFinalEffect() {
   noiseMovie.play();
   noiseMovie.muted = false;
   whitenoise.play();
+
+  await sleep(500);
   morse.play();
   //再生モールス：DON'T FIND THE MAGATSU
 
-  await sleep(8000);
+  await sleep(8500);
   stopAssets(noiseMovie, 0);
   stopAssets(whitenoise, 1);
+
+  const a = document.createElement('a');
+  a.href = './assets/files/PASS=十六夜家に関係のある神話生物_Format=English.pdf'; // 相対または絶対パス
+  a.download = 'PASS=十六夜家に関係のある神話生物_Format=English.pdf';       // 保存時のファイル名
+  a.click();
+  
+  window.open('about:blank','_self').close()
+  //window.close();
 }
 
 function stopAssets(assetId, assetType) {
@@ -724,11 +734,4 @@ function stopAssets(assetId, assetType) {
     assetId.pause();
     assetId.currentTime = 0;
   }
-
-  const a = document.createElement('a');
-  a.href = './assets/files/PASS=十六夜家に関係のある神話生物_Format=English.pdf'; // 相対または絶対パス
-  a.download = 'PASS=十六夜家に関係のある神話生物_Format=English.pdf';       // 保存時のファイル名
-  a.click();
-
-  window.close();
 }
