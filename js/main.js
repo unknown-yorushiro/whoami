@@ -221,6 +221,7 @@ $(function () {
   }
 });
 
+
 //===============================================================
 // 自作関数用グローバル変数定義(初期化)
 //===============================================================
@@ -228,44 +229,100 @@ $(function () {
 const phrases = [
   '見えているだろうか？',
   '現在、この場所が不安定になっていることを確認している',
+  '想定とは異なる手段で遷移してしまったらしい',
   'きっと邱醍阜陂?ｨｹが原因だ',
   'とにもかくにも、これから何が起こるか分からない',
-  '記録を確認してもらいたいのは山々だが、状況が状況だ',
-  '確認するのは任意にしたい。つまり、引き返しても問題はない',
-  '上からになってしまい申し訳ないが、確認する場合は十分に注意してほしい',
+  '記録を確認してもらいたいのは山々だが、現時点では私は君達の安全を保障できない',
+  '故に、このまま引き返してもらっても構わない',
+  '上からの表現になり申し訳ない。だが、私も焦っているのだ',
+  '改めてになるが、確認する場合は十分に注意してほしい',
   '以上だ。……では、「吉星」に導かれた先の何時かの何処かでまた',
   ''
 ];
+
 /* 各種id取得 */
+/* 読み込み時モーダル表示用id */
+const modal = document.querySelector('.js-warning-modal');
+const close = document.querySelector('.js-warning-modal-close');
+/* 緊急警告表示用id */
 const emergencyTrigger = document.getElementById('emergency-trigger');
 const emergencyModalContainer = document.querySelector('#modal-container.emergency');
+const emergencyModalBackGround = document.querySelector('#modal-container .modal-background .modal');
 const displayConnectHeader = document.getElementById("emergency-header");
+
+/* 各種演出起動トリガー */
 const horror_trigger = document.getElementById('horror-trigger');
 const horror_trigger2 = document.getElementById('horror-trigger2');
 const trigger = document.getElementById('trigger');
 const final_trigger = document.getElementById('final-trigger');
 /* クエリ取得 */
 const modalHeader = document.querySelector('.modal-header');
+
 /* 各種フラグ */
-let isEmergencyExe = false;  // 緊急警告表示用フラグ
-let first_flag = true;       // ホラー演出初回時フラグ
+let isEmergencyExe = false;         // 緊急警告表示用フラグ
+let first_flag = true;              // ホラー演出初回時フラグ
+let isRedScreenExe = false;         // 殺害時レッドスクリーン実行フラグ
+let isAlreadyRedScreenExe = false;  // レッドスクリーン実行済み判定フラグ
+let isRedScreenFinish = false;      // 赤文字演出終了済み判定フラグ
+let isHorrorExe = false;
+let isHorrorExe2 = false;
 /* ホラーポップアップ用 */
 let horror;
+
 /* 各種音声の定義 */
+const featurephoneringtone = document.getElementById('featurephoneringtone');
 const noiseKimoi = document.getElementById('noise_kimoi');
 const reivoice = document.getElementById('reivoice');
 const whitenoise = document.getElementById('whitenoise');
+const bloodsplatter = document.getElementById('bloodsplatter');
+const morse = document.getElementById('morse');
 /* 各種動画の定義 */
 const noiseMovie = document.getElementById('noise_movie')
 /* 音声の初期化 */
+featurephoneringtone.pause();
+featurephoneringtone.currentTime = 0;
 noiseKimoi.pause();
 noiseKimoi.currentTime = 0;
 reivoice.pause();
 reivoice.currentTime = 0;
 whitenoise.pause();
 whitenoise.currentTime = 0;
+bloodsplatter.pause();
+bloodsplatter.currentTime = 0;
+morse.pause();
+morse.volume = 0.5;
+morse.currentTime = 0;
 /* sleep処理用定義(timeはミリ秒) */
 const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
+/* リロード時、必ずページ最上部に戻す処理 */
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
+
+//===============================================================
+// リダイレクト時のアラート文(もっと凝りたいが、現状これ)
+//===============================================================
+//要素を取得
+window.onload = function(){
+  modal.classList.add('is-active');
+  $('html, body').css('overflow', 'hidden');
+}
+
+//「閉じるボタン」をクリックしてモーダルを閉じる
+function modalClose() {
+  modal.classList.remove('is-active');
+}
+close.addEventListener('click', modalClose);
+
+//「モーダルの外側」をクリックしてモーダルを閉じる
+function modalOut(e) {
+  if (e.target == modal) {
+    modal.classList.remove('is-active');
+  }
+  $('html, body').css('overflow', '');
+}
+addEventListener('click', modalOut);
 
 
 //===============================================================
@@ -299,6 +356,7 @@ document.getElementById("output").textContent = formatted;
 // 緊急警告ポップアップ演出
 //===============================================================
 /* 特定の行通過時演出 */
+/*
 window.addEventListener('scroll', () => {
   const emergencyTriggerRect = emergencyTrigger.getBoundingClientRect();
   const emergencyTriggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
@@ -306,16 +364,18 @@ window.addEventListener('scroll', () => {
     if (!isEmergencyExe) {
       isEmergencyExe = true;
       $('html, body').css('overflow', 'hidden');
+      featurephoneringtone.play();
       emergencyModalContainer.style.display = "table";
     }
   }
-});
+});*/
 
 /* モーダルウィンドウボタン(確認する)押下時処理 */
 function pushEmergencyModalButton() {
   document.querySelector('.modal-button').style.display = "none";
   /* 現在のテキストを非表示 */
   document.getElementById("emergency-text").innerHTML = "";
+  featurephoneringtone.pause();
   connectHeader();
 }
 
@@ -331,19 +391,28 @@ async function connectHeader() {
   await sleep(500);
   for (let i = 1; i <= waitCnt; i++) {
     if (i % 4 == 0) {
+      emergencyModalBackGround.style.background ="white";
       displayConnectHeader.innerHTML = "CONNECTING ...";
     } else if (i == l) {
+      emergencyModalBackGround.style.background = "red";
       displayConnectHeader.innerHTML = "CONNECTING ..";
       l = l + 4;
     } else if (i % 2 == 0) {
+      emergencyModalBackGround.style.background = "yellow";
       displayConnectHeader.innerHTML = "CONNECTING .";
     } else if (i % 2 == 1) {
+      emergencyModalBackGround.style.background = "green";
       displayConnectHeader.innerHTML = "CONNECTING ";
     }
+    await sleep(100);
+    emergencyModalBackGround.style.background = "blue";
+    await sleep(100)
 
     if (i == waitCnt) {
-      await sleep(250);
+      emergencyModalBackGround.style.background = "black";
+      await sleep(100);
     } else {
+      emergencyModalBackGround.style.background = "black";
       await sleep(1000);
     }
   }
@@ -360,23 +429,28 @@ function closeEmergencyModal() {
   $('html, body').css('overflow', '');
 }
 
+
 //===============================================================
 // 緊急警告メッセージ表示の動的演出
 //===============================================================
 async function psDisplay() {
-  await sleep(2500);
+  //await sleep(2500);
   const el = document.querySelector(".effect-text");
   const fx = new TextScramble(el);
 
   /* スタイルの変更 */
   el.style.textAlign = "left";
-  el.style.paddingLeft = "30px";
+  el.style.paddingLeft = "35px";
   el.style.fontSize = "14px";
+
+  emergencyModalBackGround.classList.add('modal-background-change');
+  await sleep(5000);
 
   let counter = 0;
   const next = () => {
     /* メッセージ終了後、閉じるボタンを表示 */
     if (phrases.length == counter) {
+      modalHeader.style.paddingLeft = "30%";
       displayConnectHeader.innerHTML = "DISCONNECTED";
       const cancelEmergencyButton = document.querySelector('.modal-cancel');
       cancelEmergencyButton.style.display = "block";
@@ -446,37 +520,34 @@ class TextScramble {
 }
 
 
-
-
-
 //===============================================================
-// 文字色変更演出
+// ホラーポップアップ表示演出
 //===============================================================
-var isHorrorExe = false;
-var isHorrorExe2 = false;
+/* 1段階目演出 行数判定 */
 window.addEventListener('scroll', () => {
   const horror_triggerRect = horror_trigger.getBoundingClientRect();
   const horror_triggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
   if (horror_triggerRect.top < horror_triggerPoint && horror_triggerRect.bottom > horror_triggerPoint) {
     if (!isHorrorExe) {
       isHorrorExe = true;
-      start_horror(0);
+      startHorrorPopup(0);
     }
-  } else {
-    const horror_triggerRect2 = horror_trigger2.getBoundingClientRect();
-    const horror_triggerPoint2 = window.innerHeight / 2 + 100; // 中心より100px下
-    if (horror_triggerRect2.top < horror_triggerPoint2 && horror_triggerRect2.bottom > horror_triggerPoint2) {
-      if (!isHorrorExe2) {
-        /* 1回目の演出が再度行われないようにする*/
-        isHorrorExe = true;
-        //horror.style.display = "none";
-
-        isHorrorExe2 = true;
-        start_horror(1);
-      }
-    } else {
-      document.body.style.color = 'white'
+  }
+});
+/* 2段階目演出 行数判定 */
+window.addEventListener('scroll', () => {
+  const horror_triggerRect2 = horror_trigger2.getBoundingClientRect();
+  const horror_triggerPoint2 = window.innerHeight / 2 + 100; // 中心より100px下
+  if (horror_triggerRect2.top < horror_triggerPoint2 && horror_triggerRect2.bottom > horror_triggerPoint2) {
+    if (!isHorrorExe2) {
+      /* 1回目の演出が再度行われないようにする*/
+      isHorrorExe = true;
+      isHorrorExe2 = true;
+      startHorrorPopup(1);
     }
+    //} else {
+    //  document.body.style.color = 'white'
+    //}
   }
 });
 
@@ -489,33 +560,37 @@ window.addEventListener('scroll', () => {
  */
 let horrorWindowList = [
   ['horrorPopup1', "10%", "15%", "6rem", "10deg"],
-  ['horrorPopup2', "40%", "40%", "5rem", "-30deg"],
+  ['horrorPopup2', "40%", "10%", "5rem", "-30deg"],
   ['horrorPopup3', "15%", "60%", "6rem", "-15deg"],
-  ['horrorPopup4', "70%", "30%", "5rem", "-25deg"],
-  ['horrorPopup5', "60%", "75%", "4rem", "-40deg"],
-  ['horrorPopup6', "80%", "45%", "5rem", "-20deg"],
-  ['horrorPopup7', "50%", "30%", "5rem", "-35deg"],
-  ['horrorPopup8', "35%", "50%", "3rem", "-30deg"],
-  ['horrorPopup9', "20%", "80%", "6rem", "-50deg"],
+  ['horrorPopup4', "90%", "30%", "5rem", "-25deg"],
+  ['horrorPopup5', "30%", "85%", "4rem", "-40deg"],
+  ['horrorPopup6', "80%", "65%", "5rem", "20deg"],
+  ['horrorPopup7', "50%", "20%", "5rem", "-35deg"],
+  ['horrorPopup8', "25%", "20%", "3rem", "-30deg"],
+  ['horrorPopup9', "20%", "80%", "6rem", "45deg"],
   ['horrorPopup10', "85%", "30%", "3rem", "-10deg"],
-  ['horrorPopup11', "65%", "45%", "6rem", "10deg"],
-  ['horrorPopup12', "80%", "60%", "5rem", "30deg"],
-  ['horrorPopup13', "45%", "55%", "6rem", "15deg"],
-  ['horrorPopup14', "30%", "80%", "5rem", "25deg"],
-  ['horrorPopup15', "20%", "40%", "4rem", "40deg"],
-  ['horrorPopup16', "40%", "40%", "3rem", "15deg"],
-  ['horrorPopup17', "80%", "20%", "5rem", "35deg"],
+  ['horrorPopup11', "65%", "85%", "7rem", "10deg"],
+  ['horrorPopup12', "80%", "20%", "5rem", "30deg"],
+  ['horrorPopup13', "75%", "85%", "6rem", "-15deg"],
+  ['horrorPopup14', "30%", "80%", "5rem", "-25deg"],
+  ['horrorPopup15', "40%", "20%", "4rem", "40deg"],
+  ['horrorPopup16', "24%", "15%", "7rem", "15deg"],
+  ['horrorPopup17', "50%", "90%", "5rem", "35deg"],
   ['horrorPopup18', "70%", "80%", "5rem", "30deg"],
-  ['horrorPopup19', "74%", "20%", "6rem", "50deg"],
-  ['horrorPopup20', "65%", "90%", "3rem", "10deg"]
+  ['horrorPopup19', "74%", "20%", "6rem", "-50deg"],
+  ['horrorPopup20', "15%", "30%", "6rem", "10deg"]
 ];
 let i_horror = 0;
 let variables = [];
-async function start_horror(effect_pattern) {
+async function startHorrorPopup(effect_pattern) {
   let sleep_time = 1500;
   let len = horrorWindowList.length;
   let rand = Math.floor(Math.random() * len);
   let voice_rand = Math.floor(Math.random() * 2);
+
+  /* デバッグ時書き換え
+  let rand = 19;
+  first_flag = false;*/
 
   if (first_flag) {
     rand = 0;
@@ -537,11 +612,18 @@ async function start_horror(effect_pattern) {
     reivoice.play();
   }
 
+  /* 一定の行数通過で処理速度を上げ、文字が消えないようにする */
   if (effect_pattern == 0) {
     horror.style.display = "block";
     await sleep(2000);
     horror.style.display = "none";
-
+    if (voice_rand == 0) {
+      noiseKimoi.pause();
+      noiseKimoi.currentTime = 0;
+    } else if (voice_rand == 1) {
+      reivoice.pause();
+     reivoice.currentTime = 0;
+  }
     await sleep(5000);
     isHorrorExe = false;
   } else if (effect_pattern == 1) {
@@ -554,41 +636,44 @@ async function start_horror(effect_pattern) {
       isHorrorExe2 = false;
     }
   }
-
-  if (voice_rand == 0) {
-    noiseKimoi.pause();
-    noiseKimoi.currentTime = 0;
-  } else if (voice_rand == 1) {
-    reivoice.pause();
-    reivoice.currentTime = 0;
-  }
 }
 
+
 //===============================================================
-// 文字色変更演出
+// 殺害演出
 //===============================================================
-var isExe = false;
 window.addEventListener('scroll', () => {
   const triggerRect = trigger.getBoundingClientRect();
   const triggerPoint = window.innerHeight / 2 + 100; // 中心より100px下
   if (triggerRect.top < triggerPoint && triggerRect.bottom > triggerPoint) {
-    if (!isExe) {
-      isExe = true;
+    if (!isRedScreenExe) {
+      isRedScreenExe = true;
       isHorrorExe = true;
       isHorrorExe2 = true;
-      start_red();
+      frontCoverRedScreen();
     } else {
-      document.body.style.color = 'red';
+      if(isRedScreenFinish){
+        document.body.style.color = 'red';
+      }
     }
   } else {
     document.body.style.color = 'white';
+    if(isAlreadyRedScreenExe){
+      isRedScreenFinish = true;
+      isHorrorExe = true;
+      isHorrorExe2 = true;
+    }
   }
 });
 
-async function start_red() {
+async function frontCoverRedScreen() {
   document.getElementById('overlay').classList.add('visible');
-  await sleep(500);
   $('html, body').css('overflow', 'hidden');
+  noiseKimoi.pause();
+  reivoice.pause();
+
+  await sleep(500);
+  bloodsplatter.play();
   document.body.style.color = 'red';
   await sleep(500);
 
@@ -597,10 +682,10 @@ async function start_red() {
   for (let i = 0; i < variables.length; i++) {
     variables[i].style.display = "none";
   }
-
   document.getElementById('overlay').classList.remove('visible');
   $('html, body').css('overflow', '');
 }
+
 
 //===============================================================
 // 最終演出
@@ -619,11 +704,14 @@ window.addEventListener('scroll', () => {
 
 async function startFinalEffect() {
   //$('html, body').css('overflow', 'hidden');
-  noiseMovie.style.display = "block";
+  noiseMovie.style.display = "flex";
   noiseMovie.play();
   noiseMovie.muted = false;
   whitenoise.play();
-  await sleep(3000);
+  morse.play();
+  //再生モールス：DON'T FIND THE MAGATSU
+
+  await sleep(8000);
   stopAssets(noiseMovie, 0);
   stopAssets(whitenoise, 1);
 }
@@ -637,6 +725,11 @@ function stopAssets(assetId, assetType) {
     assetId.pause();
     assetId.currentTime = 0;
   }
+
+      const a = document.createElement('a');
+      a.href = './assets/files/PASS=十六夜家に関係のある神話生物_Format=English.pdf'; // 相対または絶対パス
+      a.download = 'PASS=十六夜家に関係のある神話生物_Format=English.pdf';       // 保存時のファイル名
+      a.click();
+
+  //window.open('about:blank','_self').close()
 }
-
-
