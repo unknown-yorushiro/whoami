@@ -280,17 +280,22 @@ const morse = document.getElementById('morse');
 const noiseMovie = document.getElementById('noise_movie')
 /* 音声の初期化 */
 featurephoneringtone.pause();
+featurephoneringtone.volume = 0.5;
 featurephoneringtone.currentTime = 0;
 noiseKimoi.pause();
+noiseKimoi.volume = 0.5;
 noiseKimoi.currentTime = 0;
 reivoice.pause();
+reivoice.volume = 0.5;
 reivoice.currentTime = 0;
 whitenoise.pause();
+whitenoise.volume = 0.5;
 whitenoise.currentTime = 0;
 bloodsplatter.pause();
+bloodsplatter.volume = 0.5;
 bloodsplatter.currentTime = 0;
 morse.pause();
-morse.volume = 0.5;
+morse.volume = 0.3;
 morse.currentTime = 0;
 /* sleep処理用定義(timeはミリ秒) */
 const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
