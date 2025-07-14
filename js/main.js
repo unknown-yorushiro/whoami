@@ -225,6 +225,19 @@ $(function () {
 //===============================================================
 // 自作関数用グローバル変数定義(初期化)
 //===============================================================
+/* 緊急警告メッセージ表示前ノイズ */
+let noise_color =
+["#F3704B",  // 柿色 k
+ "#EFF04A",  // 秋の麒麟草 a
+ "#F3704B",  // 柿色 k
+ "#EFF04A",  // 秋の麒麟草 a
+ "#7BBFEA",  // 勿忘草色 w
+ "#EFF04A",  // 秋の麒麟草 a
+ "#005599",  // 瑠璃色 r
+ "#69B076",  // 薄緑 u
+ "#72777B",  // 鉛色 n
+ "#EFF04A"  // 秋の麒麟草 a
+]; //かかわるな
 /* 緊急警告のメッセージ内容 */
 const phrases = [
   '見えているだろうか？',
@@ -383,7 +396,8 @@ function pushEmergencyModalButton() {
 /* ボタン押下後接続中擬似演出処理 */
 async function connectHeader() {
   let l = 3;
-  let waitCnt = Math.floor(Math.random() * 4) + 8;
+  let color_num = 0;
+  let waitCnt = Math.floor(Math.random() * 4) + 6; // 6から9
 
   /* 初期値変更 */
   modalHeader.style.textAlign = "left";
@@ -391,23 +405,39 @@ async function connectHeader() {
   displayConnectHeader.innerHTML = "CONNECTING ";
   await sleep(500);
   for (let i = 1; i <= waitCnt; i++) {
+    /* 表示色がループするように調整 */
+    if (color_num == noise_color.length){
+      color_num = 0;
+    }else if(color_num != 0){
+      color_num++;
+    }
+
     if (i % 4 == 0) {
-      emergencyModalBackGround.style.background ="white";
+      emergencyModalBackGround.style.background = noise_color[color_num];
       displayConnectHeader.innerHTML = "CONNECTING ...";
     } else if (i == l) {
-      emergencyModalBackGround.style.background = "red";
+      emergencyModalBackGround.style.background = noise_color[color_num];
       displayConnectHeader.innerHTML = "CONNECTING ..";
       l = l + 4;
     } else if (i % 2 == 0) {
-      emergencyModalBackGround.style.background = "yellow";
+      emergencyModalBackGround.style.background = noise_color[color_num];
       displayConnectHeader.innerHTML = "CONNECTING .";
     } else if (i % 2 == 1) {
-      emergencyModalBackGround.style.background = "green";
+      emergencyModalBackGround.style.background = noise_color[color_num];
       displayConnectHeader.innerHTML = "CONNECTING ";
     }
     await sleep(100);
-    emergencyModalBackGround.style.background = "blue";
-    await sleep(100)
+    color_num++;
+    emergencyModalBackGround.style.background = noise_color[color_num];
+    await sleep(100);
+    color_num++;
+
+    /* 表示色がループするように調整 */
+    if (color_num == noise_color.length){
+      color_num = 0;
+    }else if(color_num != 0){
+      color_num++;
+    }
 
     if (i == waitCnt) {
       emergencyModalBackGround.style.background = "black";
