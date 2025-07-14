@@ -290,7 +290,8 @@ const whitenoise = document.getElementById('whitenoise');
 const bloodsplatter = document.getElementById('bloodsplatter');
 const morse = document.getElementById('morse');
 /* 各種動画の定義 */
-const noiseMovie = document.getElementById('noise_movie')
+//const noiseMovie = document.getElementById('noise_movie');
+const tvnoise = document.getElementById('tvnoise');
 /* 音声の初期化 */
 featurephoneringtone.pause();
 featurephoneringtone.volume = 0.5;
@@ -734,10 +735,10 @@ window.addEventListener('scroll', () => {
 });
 
 async function startFinalEffect() {
-  //$('html, body').css('overflow', 'hidden');
-  noiseMovie.style.display = "flex";
-  noiseMovie.play();
-  noiseMovie.muted = false;
+  $('html, body').css('overflow', 'hidden');
+  tvnoise.style.display = "flex";
+  tvnoise.play();
+  tvnoise.muted = false;
   whitenoise.play();
 
   await sleep(500);
@@ -745,7 +746,7 @@ async function startFinalEffect() {
   //再生モールス：DON'T FIND THE MAGATSU
 
   await sleep(8500);
-  stopAssets(noiseMovie, 0);
+  stopAssets(tvnoise, 0);
   stopAssets(whitenoise, 1);
 
   const a = document.createElement('a');
