@@ -647,7 +647,7 @@ async function startHorrorPopup(effect_pattern) {
   /* 一定の行数通過で処理速度を上げ、文字が消えないようにする */
   if (effect_pattern == 0) {
     horror.style.display = "block";
-    await sleep(4000);
+    await sleep(2000);
     horror.style.display = "none";
     if (voice_rand == 0) {
       noiseKimoi.pause();
@@ -663,7 +663,7 @@ async function startHorrorPopup(effect_pattern) {
       variables[i_horror] = horror;
       horrorWindowList.splice(rand, 1);
       variables[i_horror].style.display = "block";
-      await sleep(2000);
+      await sleep(5000);
       i_horror++;
       isHorrorExe2 = false;
     }
